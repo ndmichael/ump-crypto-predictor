@@ -1,0 +1,28 @@
+
+
+
+#footer .icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    margin-top: 4px;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    border: 1px solid navy;
+}
+#footer .icon .bi{
+    color: navy;
+    font-size: 1.5rem;
+}
+
+#footer .features{
+    padding-left: 20px;
+}
+
+.features p:nth-child(1){
+    font-size: 1.2rem;
+    font-family: 900;
+    color: navy;
+}
