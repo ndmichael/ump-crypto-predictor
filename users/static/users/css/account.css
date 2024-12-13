@@ -1,22 +1,8 @@
 
 
-.account-content{
-    padding: 2rem 10px;
-    background: linear-gradient(180deg, rgb(16, 80, 40) , 
-    rgba(102, 255, 110,.8)),
-                url("/static/pages/images/cyberbackground1.jpg");   
-    background-position: center;
-    background-size: cover;
-    color: white !important;
-    min-height: 90vh;
-}
-
-.account-content p{
-    color: white !important;
-}
-
 .account-content a{
     color: inherit;
+    text-decoration: none !important;
 }
 
 
