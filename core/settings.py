@@ -33,6 +33,8 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'predictor',
     'pages',
+    'users',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -145,3 +147,23 @@ MEDIA_URL = "/media/"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Setups for allauth
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = "none"
+# ACCOUNT_RATE_LIMITS = 7
+ACCOUNT_AUTHENTICATION_METHOD = "username"
+ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = "index"
+
+# 1 day
+ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 86400
+
+# or any other page
+LOGIN_REDIRECT_URL = 'userdashboard'
+ACCOUNT_LOGOUT_REDIRECT_URL = "account_login"
+# ACCOUNT_SIGNUP_REDIRECT_URL = "account_login"
+
+# settings.py
+AUTH_USER_MODEL = 'users.CustomUser'
