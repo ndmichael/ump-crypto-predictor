@@ -1,0 +1,40 @@
+{% extends "account/base.html" %}
+{% load static %}
+{% load i18n %}
+{% load account socialaccount %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+  <!-- Section: Log In -->
+      <section class="container">
+        <div class="row">
+          <article class="col-lg-7 mx-auto">
+                <form class="login p-2 p-md-5" method="POST" action="{% url 'account_login' %}">
+                  <div>
+                    <h1 class="h2 fw-bold text-center">{% trans "Wazza Anti Phishing" %}</h1>
+                    <p class="text-center text-muted">{% trans "Welcome Back." %}</p>
+                  </div>
+                  <br />
+                  <div class="row">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    {% if redirect_field_value %}
+                      <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                    {% endif %}
+                    <a class="button btn-danger" href="{% url 'account_reset_password' %}"></a>
+                    <div class="pb-4">
+                      <button class="btn btn-success btn-lg shadow fw-bolder btn-lg col-12" type="submit">{% trans "Sign In" %}</button>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                      <span class="pe-2">{% trans "Don't have an Account" %}</span>
+                      <a class="text-info fw-bolder secondaryAction d-flex" href="{% url 'account_signup' %}">
+                        {% trans "Sign up" %}
+                      </a>
+                    </div>
+                  </div>
+                </form>
+          </article>
+        </div>
+  </section>
+  <!-- Section: Log In -->
+{% endblock content %}

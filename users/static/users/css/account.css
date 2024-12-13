@@ -1,0 +1,59 @@
+
+
+.account-content{
+    padding: 2rem 10px;
+    background: linear-gradient(180deg, rgb(16, 80, 40) , 
+    rgba(102, 255, 110,.8)),
+                url("/static/pages/images/cyberbackground1.jpg");   
+    background-position: center;
+    background-size: cover;
+    color: white !important;
+    min-height: 90vh;
+}
+
+.account-content p{
+    color: white !important;
+}
+
+.account-content a{
+    color: inherit;
+}
+
+
+#sidebar{
+    width: 250px;
+    height: 100% !important;
+    position: fixed; 
+    background: #b7e5c1;
+    z-index: 100;
+    overflow-x: hidden;
+}
+
+.nav-link{
+    font-size: 1.1em;
+    color:  rgb(26, 26, 26);
+    margin-top: 10px;
+    border: 0 !important;
+    border-radius: 0 !important;
+}
+ 
+.nav-link .bi{
+    padding-right: 10px;
+}
+
+.nav-link:active,
+.nav-link:focus,
+.nav-link:hover{
+    background-color: #fff;
+    color: black;
+}
+
+
+.content-wrapper{
+    width: 100%;
+    min-height: 100vh;
+    padding-left: 250px;
+    /* position: absolute; */
+    background: #edfdf4b5;
+    /* padding-top: 7rem; */
+}

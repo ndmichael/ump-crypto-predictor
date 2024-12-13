@@ -1,0 +1,29 @@
+{% extends 'users/base.html' %} 
+{% load static %} 
+
+{% block content %}
+<section class="container">
+    <div class="row">
+        <article class="col-12 col-md-4 offset-md-2">
+            <a href="{% url 'scan_email' %}"
+                class="d-flex flex-column align-items-center p-4 border">
+                <i class="bi bi-upc-scan"></i>
+                <div class="pt-3">
+                    <h5>Scan Now</h5>
+                </div>
+            </a>
+        </article>
+
+        <article class="col-12 col-md-4">
+            <a href="{% url 'phishing_report'  %}" class="d-flex p-4 border">
+                <i class="bi bi-clipboard-data-fill"></i>
+                <div class="ps-3">
+                    <h5>Total Scan</h5>
+                    <p>50</p>
+                </div>
+            </a>
+        </article>
+    </div>
+</section>
+
+{% endblock %}
