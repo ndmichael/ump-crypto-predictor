@@ -1,4 +1,26 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: black;
+}
 
+html, body{
+  font-size-adjust: none;
+  font-size: 14px;
+  font-family: "Lato", sans-serif;
+  line-height: 1.7;
+  word-spacing: 2px;
+}
+
+:root{
+    --primary-color: rgb(0,0,128);
+    --primary-color-700: rgb(0, 0, 128, .7);
+}
+
+.landing-writeup h1{
+    text-shadow: 0 0 5px rgb(139, 139, 177);
+}
 
 
 #footer .icon{
@@ -7,14 +29,15 @@
     justify-content: center;
     margin-right: 15px;
     margin-top: 4px;
-    height: 50px;
-    width: 50px;
+    height: 40px;
+    width: 40px;
     border-radius: 50%;
-    border: 1px solid navy;
+    border: 1px solid var(--primary-color);
 }
 #footer .icon .bi{
-    color: navy;
-    font-size: 1.5rem;
+    color: var(--primary-color);
+    font-size: 1.3rem;
+    font-weight: bolder;
 }
 
 #footer .features{
@@ -24,5 +47,22 @@
 .features p:nth-child(1){
     font-size: 1.2rem;
     font-family: 900;
-    color: navy;
+    color: var(--primary-color);
+}
+
+/**
+==  CUSTOM BUTTON
+**/
+.btn-custom{
+    padding: 15px 30px;
+    background: var(--primary-color);
+    color: white;
+    font-size: small;
+    font-weight: bolder;
+    transition: .3s;
+}
+
+.btn-custom:hover{
+    background: var(--primary-color-700);
+    color: white;
 }
