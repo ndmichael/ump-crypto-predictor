@@ -1,4 +1,7 @@
-
+:root{
+    --primary-color: rgb(0,0,128);
+    --primary-color-700: rgb(0, 0, 128, .7);
+}
 
 .account-content a{
     color: inherit;
@@ -10,14 +13,14 @@
     width: 250px;
     height: 100% !important;
     position: fixed; 
-    background: #b7e5c1;
+    background: var(--primary-color-700);
     z-index: 100;
     overflow-x: hidden;
 }
 
 .nav-link{
     font-size: 1.1em;
-    color:  rgb(26, 26, 26);
+    color: rgb(239, 238, 238) !important;
     margin-top: 10px;
     border: 0 !important;
     border-radius: 0 !important;
@@ -40,6 +43,11 @@
     min-height: 100vh;
     padding-left: 250px;
     /* position: absolute; */
-    background: #edfdf4b5;
+    background: rgb(0, 0, 128, .2);
     /* padding-top: 7rem; */
+}
+
+.content-wrapper .navbar{
+    background-color: rgb(0, 0, 128, 1);
+    color: white;
 }
