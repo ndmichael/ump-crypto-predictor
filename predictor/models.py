@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from users.models import CustomUser
 
 class CryptoPair(models.Model):
     symbol = models.CharField(max_length=10, unique=True) # "BTCUSDT"
@@ -13,10 +14,12 @@ class CryptoPair(models.Model):
 
 class Prediction(models.Model):
     pair = models.ForeignKey(CryptoPair, on_delete=models.CASCADE)
-    predicted_price = models.FloatField()
-    volume = models.FloatField()
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, default=1)
+    predicted_price = models.DecimalField(max_digits=10, decimal_places=2)
+    volume = models.DecimalField(max_digits=10, decimal_places=2)
     timestamp = models.DateTimeField(default=timezone.now)
 
+
     def __str__(self):
-        return f"{self.crypto_symbol.symbol} ({self.time_frame}): {self.predicted_price}"
+        return f"{self.pair.symbol} ({self.pair.timeframe}): {self.predicted_price} by {self.user.username}"
 
