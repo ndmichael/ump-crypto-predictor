@@ -33,7 +33,7 @@
 .nav-link:active,
 .nav-link:focus,
 .nav-link:hover{
-    background-color: #fff;
+    background-color: #110084;
     color: black;
 }
 
@@ -49,5 +49,5 @@
 
 .content-wrapper .navbar{
     background-color: rgb(0, 0, 128, 1);
-    color: white;
+    color: white !important;
 }
