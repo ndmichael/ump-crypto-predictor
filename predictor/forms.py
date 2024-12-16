@@ -6,6 +6,11 @@ from crispy_forms.layout import Submit, Layout, Div, Row, BaseInput
 from crispy_bootstrap5.bootstrap5 import FloatingField, Field
 
 
+
+class CustomSubmit(BaseInput):
+    input_type = "submit"
+    field_classes = "btn btn-custom btn-lg"
+
 CRYPTO_SYMBOLS = (
     ("BTC", "Bitcoin (BTC)"),
     ("ETH", "Ethereum (ETH)"),
@@ -44,9 +49,6 @@ BASE_SYMBOLS = (
 
 # Define the time frames as a tuple of tuples
 TIME_FRAMES = (
-    ("5m", "5 Minutes"),
-    ("15m", "15 Minutes"),
-    ("30m", "30 Minutes"),
     ("1h", "1 Hour"),
     ("12h", "12 Hours"),
     ("1d", "1 Day"),
@@ -65,9 +67,16 @@ class CryptoPredictionForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
+        # self.helper.disable_csrf = True
         self.helper.form_tag = False
         self.helper.layout = Layout(
-            Field("status", wrapper_class='col-md-12 control-lg'),
-            Field("comment",),
-            Submit('submit', "Submit Payment", css_class="btn-lg")
+            Row(
+                FloatingField("crypto_symbol", wrapper_class='col-md-6'),
+                FloatingField("base_symbol", wrapper_class='col-md-6'),
+                FloatingField("time_frame", wrapper_class='col-12'),
+                Div(
+                    CustomSubmit('submit', 'PREDICT NOW', css_class='col-12 px-2')
+                )
+                
+            ),
         )
