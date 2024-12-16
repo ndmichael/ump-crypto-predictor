@@ -1,13 +1,14 @@
 {% extends 'users/base.html' %} 
 {% load static %} 
+{% load crispy_forms_tags %} 
 
 {% block content %}
 <section class="container">
     <div class="row">
-        <article class="col-12 col-md-10 mx-auto">
-            <div>
-                
-            </div>
+        <article class="col-12 col-md-8 mx-auto">
+            <form action="" method="post" class="p-5 bg-white border shadow-sm rounded-2">
+                {{ crypto_form | crispy }}
+            </form>
         </article>
     </div>
 </section>
