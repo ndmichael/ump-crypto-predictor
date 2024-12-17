@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from tensorflow.keras.models import load_model
 from predictor.forms import CryptoPredictionForm
 from predictor.models import CryptoPair, Prediction
@@ -33,7 +34,9 @@ def user_dashboard(request):
                     user=request.user
                 )
 
-
+            messages.success(
+                request, f"{name} : {time_frame} has been sent for analysis."
+            )
             return redirect("prediction_result")
 
             # try:
