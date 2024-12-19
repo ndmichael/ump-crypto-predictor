@@ -1,0 +1,23 @@
+{% extends 'users/base.html' %} 
+{% load static %} 
+{% load crispy_forms_tags %} 
+
+{% block content %}
+<section class="container">
+    <div class="row">
+        <article class="col-12 col-md-10 mx-auto">
+            <header class="bg-light p-4">
+                <h1>Crypto Price Prediction Results</h1>
+                <p><strong>Date:</strong> {% now "Y-m-d" %}</p>
+                <p><strong>Time:</strong> {% now "H:i:s" %}</p>
+            </header>
+        </article>
+        <article class="col-6 col-md-4 mx-auto">
+            <div>
+                <i class="bi bi-count"></i>
+            </div>
+        </article>
+    </div>
+</section>
+
+{% endblock %}
