@@ -22,11 +22,6 @@ CRYPTO_SYMBOLS = (
     ("DOT", "Polkadot (DOT)"),
     ("MATIC", "Polygon (MATIC)"),
     ("SHIB", "Shiba Inu (SHIB)"),
-    ("LTC", "Litecoin (LTC)"),
-    ("TRX", "TRON (TRX)"),
-    ("AVAX", "Avalanche (AVAX)"),
-    ("ATOM", "Cosmos (ATOM)"),
-    ("LINK", "Chainlink (LINK)"),
 )
 
 BASE_SYMBOLS = (
@@ -40,21 +35,18 @@ BASE_SYMBOLS = (
     ("GBP", "British Pound (GBP)"),
     ("AUD", "Australian Dollar (AUD)"),
     ("JPY", "Japanese Yen (JPY)"),
-    ("TRY", "Turkish Lira (TRY)"),
-    ("RUB", "Russian Ruble (RUB)"),
-    ("CAD", "Canadian Dollar (CAD)"),
-    ("CNY", "Chinese Yuan (CNY)"),
-    ("KRW", "South Korean Won (KRW)"),
 )
 
 # Define the time frames as a tuple of tuples
 TIME_FRAMES = (
+    ("", "----"),
+    ("15m", "15 Minutes"),
+    ("30m", "30 Minutes"), 
     ("1h", "1 Hour"),
-    ("12h", "12 Hours"),
+    ("2h", "2 Hours"),
+    ("4h", "2 Hours"),
     ("1d", "1 Day"),
-    ("3d", "3 Days"),
     ("1w", "1 Week"),
-    ("1M", "1 Month"),
 )
 
 # Add the time frame to the form
@@ -76,7 +68,6 @@ class CryptoPredictionForm(forms.Form):
                 FloatingField("time_frame", wrapper_class='col-12'),
                 Div(
                     CustomSubmit('submit', 'PREDICT NOW', css_class='col-12 px-2')
-                )
-                
+                )    
             ),
         )
