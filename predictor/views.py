@@ -8,3 +8,11 @@ def prediction_result(request):
         "title": "prediction result"
     }
     return render(request, 'predictor/predictor_result.html', context)
+
+def predictions(request):
+
+
+    context = {
+        "title": "predictions"
+    }
+    return render(request, 'predictor/predictions.html', context)
