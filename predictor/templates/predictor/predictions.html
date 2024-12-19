@@ -6,15 +6,62 @@
 <section class="container">
     <div class="row">
         <article class="col-12 col-md-10 mx-auto">
-            <header class="bg-light p-4">
+            <header class="p-4">
                 <h1>Crypto Price Prediction Results</h1>
-                <p><strong>Date:</strong> {% now "Y-m-d" %}</p>
+                <p><strong class="text-primary">Date:</strong> {% now "Y-m-d" %}</p>
                 <p><strong>Time:</strong> {% now "H:i:s" %}</p>
             </header>
         </article>
         <article class="col-6 col-md-4 mx-auto">
             <div>
                 <i class="bi bi-count"></i>
+                <div></div>
+            </div>
+        </article>
+    </div>
+
+    <!-- Second rows -->
+    <div class="row">
+        <article class="col-12 col-md-10 mx-auto">
+            <div class="table-responsive bg-white p-5 rounded-5">
+                <table class="table mt-4 table-hover">
+                    <thead class="bg-light">
+                        <tr>
+                            <th scope="col">Row No</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody
+                        class="
+                        animate__animated
+                        animate__fadeInUp
+                        animate_slow
+                        "
+                    >
+                        {%for prediction in predictions %}
+                        
+                        <tr>  
+                            <td>
+                                {{forloop.counter}}
+                            </td>
+                            <td>
+                                {{prediction.pair.name | upper}}
+                            </td>
+                            <td>
+                                {{prediction.predicted_price}}
+                            </td>
+
+                            <td>
+                                {{prediction.timestamp}}  
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <p class="alert alert-info fw-bolder">No Prediction Recorded.</p>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </article>
     </div>
