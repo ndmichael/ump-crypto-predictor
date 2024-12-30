@@ -29,6 +29,8 @@
                         <tr>
                             <th scope="col">Row No</th>
                             <th scope="col">Name</th>
+                            <th scope="col">Timeframe</th>
+                            <th scope="col">Volumes</th>
                             <th scope="col">Price</th>
                             <th scope="col">Date</th>
                         </tr>
@@ -48,6 +50,12 @@
                             </td>
                             <td>
                                 {{prediction.pair.name | upper}}
+                            </td>
+                            <td>
+                                {{prediction.pair.timeframe | upper }}
+                            </td>
+                            <td>
+                                {{prediction.volume }}
                             </td>
                             <td>
                                 {{prediction.predicted_price}}
