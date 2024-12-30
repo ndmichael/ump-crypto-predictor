@@ -66,16 +66,17 @@ def user_dashboard(request):
 
                 
                 # Save prediction with user reference
-                Prediction.objects.create(
+                prediction = Prediction.objects.create(
                     pair=crypto_pair,
                     predicted_price=predicted_price_decimal,
                     volume=volume_decimal,
                     user=request.user
                 )
                 messages.success(
-                request, f"{name} : {time_frame} has been sent for analysis."
+                    request, f"{name} : {time_frame} Analysis Completed."
                 )
-                return redirect("prediction_result")
+                return f"prediction_result?prediction_id={prediction.id}"
+            
             except Exception as e:
                 print("Error: ", e)
                 messages.error(
