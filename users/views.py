@@ -8,7 +8,9 @@ from predictor.ml.utils import fetch_candlestick_data
 import os
 import pickle
 from decimal import Decimal
+from django.conf import settings
 
+ 
 @login_required
 def user_dashboard(request):
     if request.method == 'POST':
@@ -24,28 +26,25 @@ def user_dashboard(request):
             # Create or retrieve the CryptoPair instance
             crypto_pair, created = CryptoPair.objects.get_or_create(
                 symbol=symbol,
-                defaults={'name': name, 'timeframe': time_frame}
+                timeframe= time_frame,
+                defaults={'name': name}
             )
-
-            # Prediction.objects.create(
-            #         pair=crypto_pair,
-            #         predicted_price=Decimal(100),
-            #         volume=Decimal(100),
-            #         user=request.user
-            #     )
-
-            # messages.success(
-            #     request, f"{name} : {time_frame} has been sent for analysis."
-            # )
-            # return redirect("prediction_result")
 
             try:
                 # Load pre-trained model
-                model_path = f"{crypto_pair.symbol}_{time_frame}_model.h5"
-                scaler_path = f"{crypto_pair.symbol}_{time_frame}_scaler.pkl"
+                # Construct the file paths for the model and scaler
+                model_path = os.path.join(settings.BASE_DIR, 'predictor', 'ai_models', f"{crypto_pair.symbol}_{time_frame}_model.keras")
+                scaler_path = os.path.join(settings.BASE_DIR, 'predictor', 'ai_models', f"{crypto_pair.symbol}_{time_frame}_scaler.pkl")
+
+                print(f"scaler: ${scaler_path}")
+                print(f"model: ${model_path}")
 
                 if not os.path.exists(model_path) or not os.path.exists(scaler_path):
-                    return render(request, 'prediction/error.html', {'error': 'Model or scaler not found.'})
+                    # return render(request, 'prediction/error.html', {'error': 'Model or scaler not found.'})
+                    messages.error(
+                        request, f"Please confirm pairs & intervals"
+                    )
+                    return redirect("user_dashboard")
 
                 model = load_model(model_path)
                 with open(scaler_path, 'rb') as f:
@@ -58,13 +57,19 @@ def user_dashboard(request):
                 predicted_price = model.predict(scaled_input)
                 prediction_value = scaler.inverse_transform(predicted_price)[0][0]
 
-                predicted_price_decimal = Decimal(prediction_value)
+                # Convert predicted price to Decimal
+                predicted_price_decimal = Decimal(str(float(prediction_value)))
+
+                # Convert volume to Decimal
+                volume_value = data["Volume"].iloc[-1]  # Use the last volume value
+                volume_decimal = Decimal(str(float(volume_value)))
+
                 
                 # Save prediction with user reference
                 Prediction.objects.create(
                     pair=crypto_pair,
                     predicted_price=predicted_price_decimal,
-                    volume=0,
+                    volume=volume_decimal,
                     user=request.user
                 )
                 messages.success(
@@ -72,6 +77,7 @@ def user_dashboard(request):
                 )
                 return redirect("prediction_result")
             except Exception as e:
+                print("Error: ", e)
                 messages.error(
                 request, f"there was an error, Please confirm pairs."
                 )
