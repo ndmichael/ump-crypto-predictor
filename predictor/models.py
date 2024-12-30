@@ -3,13 +3,16 @@ from django.utils import timezone
 from users.models import CustomUser
 
 class CryptoPair(models.Model):
-    symbol = models.CharField(max_length=10, unique=True) # "BTCUSDT"
+    symbol = models.CharField(max_length=10) # "BTCUSDT"
     name = models.CharField(max_length=50) # "BTC/USDT"
     timeframe = models.CharField(max_length=5)      # e.g., 1m, 5m
     created_at = models.DateTimeField(default=timezone.now)
 
+    class Meta:
+        unique_together = ('symbol', 'timeframe')
+
     def __str__(self):
-        return self.symbol
+        return f"{self.symbol} {self.timeframe}"
 
 
 class Prediction(models.Model):
