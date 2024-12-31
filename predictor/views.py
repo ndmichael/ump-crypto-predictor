@@ -3,9 +3,8 @@ from .models import Prediction
 from django.contrib import messages
 
 
-def prediction_result(request):
+def prediction_result(request, prediction_id):
 
-    prediction_id = request.GET.get("prediction_id")
     if not prediction_id:
         messages.error(request, "No prediction found.")
         return redirect("user_dashboard")
