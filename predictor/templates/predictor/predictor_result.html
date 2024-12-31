@@ -6,11 +6,32 @@
 <section class="container">
     <div class="row">
         <article class="col-12 col-md-8 mx-auto">
-            <form action="" method="post" class="p-5 bg-white border shadow-sm rounded-2">
-                <header class="pb-3 mb-5 border-bottom">
-                    <h4>PREDICTOR RESULT </h4>
-                </header>
-            </form>
+            <header class="pb-3 mb-4 border-bottom">
+                <h4>PREDICTOR RESULT </h4>
+                <h2 class="text-success">Predicted Price: {{prediction.predicted_price }}</h2>
+            </header>
+
+            <table class="table table-responsive">
+                <tr>
+                    <td>PAIRS</td>
+                    <td class="fw-bolder text-">{{prediction.pair.name | upper}}</td>
+                </tr>
+
+                <tr>
+                    <td>Time Frame:</td>
+                    <td>in {{prediction.pair.timeframe}}</td>
+                </tr>
+
+                <tr>
+                    <td>Volume:</td>
+                    <td>in {{prediction.volume}}</td>
+                </tr>
+
+                <tr>
+                    <td>Date:</td>
+                    <td>{{prediction.timestamp}}</td>
+                </tr>
+            </table>
         </article>
     </div>
 </section>
