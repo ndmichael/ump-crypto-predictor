@@ -8,30 +8,32 @@
         <article class="col-12 col-md-8 mx-auto">
             <header class="pb-3 mb-4 border-bottom">
                 <h4>PREDICTOR RESULT </h4>
-                <h2 class="text-success">Predicted Price: {{prediction.predicted_price }}</h2>
+                <h2 class="pt-2">Predicted Price: <span class="text-success fw-bolder">{{prediction.predicted_price }}</span></h2>
             </header>
 
-            <table class="table table-responsive">
-                <tr>
-                    <td>PAIRS</td>
-                    <td class="fw-bolder text-">{{prediction.pair.name | upper}}</td>
-                </tr>
-
-                <tr>
-                    <td>Time Frame:</td>
-                    <td>in {{prediction.pair.timeframe}}</td>
-                </tr>
-
-                <tr>
-                    <td>Volume:</td>
-                    <td>in {{prediction.volume}}</td>
-                </tr>
-
-                <tr>
-                    <td>Date:</td>
-                    <td>{{prediction.timestamp}}</td>
-                </tr>
-            </table>
+            <div class="p-4 bg-white rounded-2">
+                <table class="table table-responsive">
+                    <tr>
+                        <td>PAIRS</td>
+                        <td class="fw-bolder text-end text-success">{{prediction.pair.name | upper}}</td>
+                    </tr>
+    
+                    <tr>
+                        <td>Time Frame:</td>
+                        <td class="fw-bold text-end">in, {{prediction.pair.timeframe}}</td>
+                    </tr>
+    
+                    <tr>
+                        <td>Volume:</td>
+                        <td class="fw-bold text-end">{{prediction.volume}}</td>
+                    </tr>
+    
+                    <tr>
+                        <td>Date:</td>
+                        <td class="fw-bold text-end">{{prediction.timestamp}}</td>
+                    </tr>
+                </table>
+            </div> 
         </article>
     </div>
 </section>
