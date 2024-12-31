@@ -44,9 +44,8 @@ TIME_FRAMES = (
     ("30m", "30 Minutes"), 
     ("1h", "1 Hour"),
     ("2h", "2 Hours"),
-    ("4h", "2 Hours"),
+    ("4h", "4 Hours"),
     ("1d", "1 Day"),
-    ("1w", "1 Week"),
 )
 
 # Add the time frame to the form
