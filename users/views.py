@@ -75,7 +75,7 @@ def user_dashboard(request):
                 messages.success(
                     request, f"{name} : {time_frame} Analysis Completed."
                 )
-                return f"prediction_result?prediction_id={prediction.id}"
+                return redirect(f"prediction_result", prediction_id=prediction.id)
             
             except Exception as e:
                 print("Error: ", e)
