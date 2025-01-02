@@ -126,5 +126,25 @@
 >
 </script>
 
+
+<script>
+    document.getElementById('crypto-form').addEventListener('submit', function() {
+        const submitButton = document.getElementById('submit-btn');
+        const buttonText = document.getElementById('button-text');
+        const loader = document.getElementById('loader');
+        const processingText = document.getElementById('processing-text');
+
+        // Disable the button
+        submitButton.disabled = true;
+
+        // Hide the button text and show the loader inside the button
+        buttonText.style.display = 'none';
+        loader.style.display = 'inline-block';
+
+        // Show the processing text
+        processingText.style.display = 'block';
+    });
+</script>
+
 </body>
 </html>
