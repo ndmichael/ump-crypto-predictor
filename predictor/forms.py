@@ -7,9 +7,9 @@ from crispy_bootstrap5.bootstrap5 import FloatingField, Field
 
 
 
-class CustomSubmit(BaseInput):
-    input_type = "submit"
-    field_classes = "btn btn-custom btn-lg"
+# class CustomSubmit(BaseInput):
+#     input_type = "submit"
+#     field_classes = "btn btn-custom btn-lg"
 
 CRYPTO_SYMBOLS = (
     ("BTC", "Bitcoin (BTC)"),
@@ -65,8 +65,5 @@ class CryptoPredictionForm(forms.Form):
                 FloatingField("crypto_symbol", wrapper_class='col-md-6'),
                 FloatingField("base_symbol", wrapper_class='col-md-6'),
                 FloatingField("time_frame", wrapper_class='col-12'),
-                Div(
-                    CustomSubmit('submit', 'PREDICT NOW', css_class='col-12 px-2')
-                )    
             ),
         )
