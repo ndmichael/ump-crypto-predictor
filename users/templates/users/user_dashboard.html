@@ -6,11 +6,33 @@
 <section class="container">
     <div class="row">
         <article class="col-12 col-md-8 mx-auto">
-            <form action="" method="post" class="p-5 bg-white border shadow-sm rounded-2">
+            <form action="" method="post" id="crypto-form" class="p-5 bg-white border shadow-sm rounded-2">
                 <header class="pb-3 mb-5 border-bottom">
                     <h4>PREDICT PRICE FOR CRYPTO PAIR </h4>
                 </header>
                 {% crispy crypto_form %}
+                <button class="btn btn-custom btn-lg col-12 px-2 text-light" type="submit" id="submit-btn">
+                    <span 
+                        id="button-text"
+                        style="color: beige;"
+                    >
+                        PREDICT NOW
+                    </span>
+
+                    <div 
+                        id="loader" 
+                        class="spinner-grow text-primary large" 
+                        role="status" 
+                        style="display: none;"
+                    ></div>
+                      
+                </button>
+                <div 
+                    id="processing-text" 
+                    style="display: none; margin-top: 10px;"
+                >
+                    <i class="bi bi-robot text-success"></i> <span class="ps-3">AI analyzing your pairs.....</span>
+                </div>
             </form>
         </article>
     </div>
