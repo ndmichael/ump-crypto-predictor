@@ -30,3 +30,13 @@ def predictions(request):
         "predictions": predictions,
     }
     return render(request, 'predictor/predictions.html', context)
+
+
+def user_settings(request):
+
+    predictions = Prediction.objects.all().order_by("-timestamp")
+
+    context = {
+        "title": "settings",
+    }
+    return render(request, 'predictor/user_settings.html', context)
