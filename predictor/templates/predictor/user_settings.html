@@ -1,0 +1,48 @@
+{% extends 'users/base.html' %} 
+{% load static %} 
+{% load crispy_forms_tags %} 
+
+{% block content %}
+<section class="container">
+    <div class="row">
+        <article class="col-12 col-md-12 text-center">
+            <header class="pb-4">
+                <h2>Basic settings </h2>
+            </header>
+        </article>
+    </div>
+
+    <div class="row">
+        <article class="col-12 col-md-3 mb-5 offset-md-3">
+            <a 
+                href="{% url 'account_change_password' %}" 
+                class="border p-5 text-center"
+                style="background: #120084; color:white"
+            >
+                <i class="bi bi-shield-lock" style="font-size: 20px; color:#042df5"></i>
+                <h5>CHANGE PASSWORD</h5>
+            </a>
+        </article>
+
+        <article class="col-12 col-md-3 mb-5">
+            <a 
+                href="{% url 'account_email' %}" 
+                class="border p-5 text-center"
+                style="background: #006784; color:white"
+            >
+                <i class="bi bi-envelope-at-fill" style="font-size: 20px; color:#061669"></i>
+                <h5>Change you Email</h5>
+            </a>
+        </article>
+
+        <article class="col-12 col-md-6 mx-auto">
+            <img 
+                src="{% static 'pages/images/bg3.jpeg' %}" 
+                alt="" 
+                class="img-fluid"
+                style="height: 350px; width: 100%; object-fit: cover;"
+            >
+        </article>
+</section>
+
+{% endblock %}
