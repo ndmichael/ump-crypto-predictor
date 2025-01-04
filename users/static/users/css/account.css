@@ -37,6 +37,12 @@
     color: black;
 }
 
+a{
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
 
 .content-wrapper{
     width: 100%;
