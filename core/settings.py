@@ -44,11 +44,16 @@ INSTALLED_APPS = [
 
     "crispy_forms",
     "crispy_bootstrap5",
+
+    # set allauth
     'allauth',
     'allauth.account',
     "allauth.socialaccount",
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.facebook',
+
+    # set celery beat
+    'django_celery_beat'
 ]
 
 MIDDLEWARE = [
@@ -167,3 +172,8 @@ ACCOUNT_LOGOUT_REDIRECT_URL = "account_login"
 
 # settings.py
 AUTH_USER_MODEL = 'users.CustomUser'
+
+
+# Celery configuration
+CELERY_BROKER_URL = "redis://localhost:6379/0"
+CELERY_RESULT_BACKEND = "redis://localhost:6379/0"
