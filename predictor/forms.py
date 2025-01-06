@@ -22,6 +22,10 @@ CRYPTO_SYMBOLS = (
     ("DOT", "Polkadot (DOT)"),
     ("MATIC", "Polygon (MATIC)"),
     ("SHIB", "Shiba Inu (SHIB)"),
+    ("TRX", "TRON (TRX)"),
+    ("AVAX", "Avalanche (AVAX)"),
+    ("ATOM", "Cosmos (ATOM)"),
+    ("LINK", "Chainlink (LINK)")
 )
 
 BASE_SYMBOLS = (
