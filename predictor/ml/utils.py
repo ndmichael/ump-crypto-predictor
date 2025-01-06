@@ -12,9 +12,7 @@ CRYPTO_SYMBOLS = ["BTC", "ETH", "BNB", "XRP", "ADA", "SOL", "DOGE", "SHIB", "TRX
 BASE_SYMBOLS = ["USDT", "USDC", "EUR", "JPY", "TRY"]
 TIME_FRAMES = ["15m", "30m", "1h", "4h", "1d", "1w"]
 
-# Base path for saving models and scalers
-base_path = os.getcwd()
-
+BINANCE_BASE_URL = "https://api.binance.com/api/v3/klines"
 
 # Fetch available symbols
 def fetch_crypto_symbols():
@@ -24,7 +22,6 @@ def fetch_crypto_symbols():
 
 # Function to fetch candlestick data with dynamic date ranges
 def fetch_candlestick_data(symbol, interval, start_time, end_time):
-    BINANCE_BASE_URL = "https://api.binance.com/api/v3/klines"
     limit = 1000
     df = pd.DataFrame()
 
@@ -52,8 +49,6 @@ def fetch_candlestick_data(symbol, interval, start_time, end_time):
         raise ValueError(f"No data fetched for {symbol} at {interval}.")
 
     return df[['Open', 'High', 'Low', 'Close', 'Volume']].astype(float)
-
-
 
 
 
