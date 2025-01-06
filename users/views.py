@@ -9,6 +9,7 @@ import os
 import pickle
 from decimal import Decimal
 from django.conf import settings
+from datetime import datetime, timedelta
 
  
 @login_required
@@ -50,7 +51,11 @@ def user_dashboard(request):
                 with open(scaler_path, 'rb') as f:
                     scaler = pickle.load(f)
 
-                data = fetch_candlestick_data(crypto_pair.symbol, time_frame)
+                # Determine the time range for fetching data
+                end_time = datetime.utcnow()
+                start_time = end_time - timedelta(days=120)
+
+                data = fetch_candlestick_data(crypto_pair.symbol, time_frame, start_time, end_time)
                 latest_price = data['Close'].values[-60:].reshape(-1, 1)
                 scaled_input = scaler.transform(latest_price)
                 scaled_input = scaled_input.reshape(1, -1, 1)
