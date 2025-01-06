@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import os
+os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0' # suppress tensorflow float warning
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -162,8 +164,10 @@ ACCOUNT_EMAIL_VERIFICATION = "none"
 ACCOUNT_AUTHENTICATION_METHOD = "username"
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = "index"
 
-# 1 day
-ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 86400
+
+ACCOUNT_RATE_LIMITS = {
+    "login_failed": "5/60s"  # Example: 5 failed login attempts per 60 seconds
+}
 
 # or any other page
 LOGIN_REDIRECT_URL = 'userdashboard'
