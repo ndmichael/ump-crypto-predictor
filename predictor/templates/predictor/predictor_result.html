@@ -7,8 +7,17 @@
     <div class="row">
         <article class="col-12 col-md-8 mx-auto">
             <header class="pb-3 mb-4 border-bottom">
-                <h4>PREDICTOR RESULT </h4>
-                <h2 class="pt-2">Predicted Price: <span class="text-success fw-bolder">{{prediction.predicted_price }}</span></h2>
+                <h5 class="fw-bolder">PREDICTOR RESULT </h5>
+                <h3>Signals</h3>
+                {% if prediction.signal == 'SELL' %}
+                <h3 class="pt-2"><span class="text-danger fw-bolder">{{prediction.signal }}</span></h3>
+                {% elif prediction.signal == 'BUY' %}
+                <h3 class="pt-2"><span class="text-success fw-bolder">{{prediction.signal }}</span></h3>
+                {% else %}
+                <h3 class="pt-2"><span class="text-warning fw-bolder">{{prediction.signal }}</span></h3>
+                {% endif %}
+                <h5 class="pt-2">Predicted Price: <span class="text-success fw-bolder">{{ prediction.predicted_price }}</span></h5>
+                <h5 class="pt-2">Current Price: <span class="text-success fw-bolder">{{ prediction.current_price }}</span></h5>
             </header>
 
             <div class="p-4 bg-white rounded-2">
@@ -21,6 +30,16 @@
                     <tr>
                         <td>Time Frame:</td>
                         <td class="fw-bold text-end">in, {{prediction.pair.timeframe}}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Predicted Price:</td>
+                        <td class="fw-bold text-end">{{prediction.predicted_price}}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Current Price:</td>
+                        <td class="fw-bold text-end">{{prediction.current_price}}</td>
                     </tr>
     
                     <tr>
