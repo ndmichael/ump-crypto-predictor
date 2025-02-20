@@ -19,7 +19,7 @@ CRYPTO_SYMBOLS = (
     ("ADA", "Cardano (ADA)"),
     ("SOL", "Solana (SOL)"),
     ("DOGE", "Dogecoin (DOGE)"),
-    ("DOT", "Polkadot (DOT)"),
+    # ("DOT", "Polkadot (DOT)"),
     ("MATIC", "Polygon (MATIC)"),
     ("SHIB", "Shiba Inu (SHIB)"),
     ("TRX", "TRON (TRX)"),
