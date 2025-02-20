@@ -86,10 +86,6 @@ def user_dashboard(request):
                 stop_loss = predicted_price_decimal - (atr * Decimal('1.5'))  
                 take_profit = predicted_price_decimal + (atr * Decimal('2'))  
 
-                # Calculate confidence as the percentage difference between the predicted and current price.
-                # You can modify this logic if you have a model-based confidence measure.
-                confidence_score = abs((predicted_price_decimal - current_price) / current_price) * Decimal('100')
-
                 # Determine Buy/Sell Signal
                 if predicted_price_decimal > current_price * Decimal('1.01'):
                     signal = "BUY"
@@ -111,7 +107,6 @@ def user_dashboard(request):
                     current_price=current_price,
                     stop_loss=stop_loss,
                     take_profit=take_profit,
-                    confidence_score = confidence_score,
                     signal=signal,
                     user=request.user
                 )
