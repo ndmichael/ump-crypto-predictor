@@ -1,15 +1,23 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+
 from tensorflow.keras.models import load_model
+from sklearn.metrics import mean_squared_error
+import numpy as np
+
 from predictor.forms import CryptoPredictionForm
 from predictor.models import CryptoPair, Prediction
 from predictor.ml.utils import fetch_candlestick_data
+
 import os
 import pickle
 from decimal import Decimal
 from django.conf import settings
 from datetime import datetime, timedelta
+
+import logging
+logger = logging.getLogger(__name__)
 
  
 @login_required
@@ -53,17 +61,42 @@ def user_dashboard(request):
 
                 # Determine the time range for fetching data
                 end_time = datetime.utcnow()
-                start_time = end_time - timedelta(days=120)
+                start_time = end_time - timedelta(days=5)
 
                 data = fetch_candlestick_data(crypto_pair.symbol, time_frame, start_time, end_time)
-                latest_price = data['Close'].values[-60:].reshape(-1, 1)
-                scaled_input = scaler.transform(latest_price)
+                latest_prices = data['Close'].values[-60:].reshape(-1, 1)
+                
+                scaled_input = scaler.transform(latest_prices)
                 scaled_input = scaled_input.reshape(1, -1, 1)
+
+                # Predict price
                 predicted_price = model.predict(scaled_input)
                 prediction_value = scaler.inverse_transform(predicted_price)[0][0]
 
                 # Convert predicted price to Decimal
                 predicted_price_decimal = Decimal(str(float(prediction_value)))
+
+                # Get latest actual price
+                current_price = Decimal(str(float(data['Close'].iloc[-1])))
+
+                # Calculate market volatility using ATR
+                atr = Decimal(str(float(data['High'].iloc[-10:].mean() - data['Low'].iloc[-10:].mean())))  
+                
+                # Adjust Stop-Loss & Take-Profit dynamically based on ATR
+                stop_loss = predicted_price_decimal - (atr * Decimal('1.5'))  
+                take_profit = predicted_price_decimal + (atr * Decimal('2'))  
+
+                # Calculate confidence as the percentage difference between the predicted and current price.
+                # You can modify this logic if you have a model-based confidence measure.
+                confidence_score = abs((predicted_price_decimal - current_price) / current_price) * Decimal('100')
+
+                # Determine Buy/Sell Signal
+                if predicted_price_decimal > current_price * Decimal('1.01'):
+                    signal = "BUY"
+                elif predicted_price_decimal < current_price * Decimal('0.99'):
+                    signal = "SELL"
+                else:
+                    signal = "HOLD"
 
                 # Convert volume to Decimal
                 volume_value = data["Volume"].iloc[-1]  # Use the last volume value
@@ -75,6 +108,11 @@ def user_dashboard(request):
                     pair=crypto_pair,
                     predicted_price=predicted_price_decimal,
                     volume=volume_decimal,
+                    current_price=current_price,
+                    stop_loss=stop_loss,
+                    take_profit=take_profit,
+                    confidence_score = confidence_score,
+                    signal=signal,
                     user=request.user
                 )
                 messages.success(
@@ -83,9 +121,9 @@ def user_dashboard(request):
                 return redirect(f"prediction_result", prediction_id=prediction.id)
             
             except Exception as e:
-                print("Error: ", e)
+                logger.error(f"Prediction error: {e}")
                 messages.error(
-                request, f"there was an error, Please confirm pairs."
+                    request, "An unexpected error occurred. Check pairs Please try again later."
                 )
                 return redirect("user_dashboard")
     else:
