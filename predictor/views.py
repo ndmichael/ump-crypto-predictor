@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from .models import Prediction
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 
+@login_required
 def prediction_result(request, prediction_id):
-
     if not prediction_id:
         messages.error(request, "No prediction found.")
         return redirect("user_dashboard")
