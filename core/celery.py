@@ -5,6 +5,7 @@ import os
 from celery import Celery
 from celery.schedules import crontab
 
+
 # Set the default Django settings module for the 'celery' program.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
 
@@ -21,10 +22,10 @@ app.autodiscover_tasks()
 def debug_task(self):
     print(f'Request: {self.request!r}')
 
-# app.conf.beat_schedule = {
-#     'retrain-every-24hrs': {
-#         'task': 'clients.tasks.calculate_interest',
-#         # 'schedule': crontab(minute=0, hour=0),  # Run the task daily at midnight
-#         'schedule': crontab(minute='*/1'),
-#     },
-# }
+app.conf.beat_schedule = {
+    'retrain-every-24hrs': {
+        'task': 'clients.tasks.calculate_interest',
+        'schedule': crontab(minute=0, hour=0),  # Run the task daily at midnight
+        # 'schedule': crontab(minute='*/1'),
+    },
+}
