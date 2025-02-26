@@ -8,7 +8,7 @@ import numpy as np
 
 from predictor.forms import CryptoPredictionForm
 from predictor.models import CryptoPair, Prediction
-from predictor.ml.utils import fetch_candlestick_data
+from predictor.ml.utils import fetch_candlestick_data, mc_dropout_prediction, calculate_confidence
 
 import os
 import pickle
@@ -70,11 +70,24 @@ def user_dashboard(request):
                 scaled_input = scaled_input.reshape(1, -1, 1)
 
                 # Predict price
-                predicted_price = model.predict(scaled_input)
-                prediction_value = scaler.inverse_transform(predicted_price)[0][0]
+                # predicted_price = model.predict(scaled_input)
+                # prediction_value = scaler.inverse_transform(predicted_price)[0][0]
 
                 # Convert predicted price to Decimal
+                # predicted_price_decimal = Decimal(str(float(prediction_value)))
+
+                # Instead of a single prediction, use MC dropout to get multiple predictions
+                mean_pred, std_pred = mc_dropout_prediction(model, scaled_input, n_iter=50)
+                # Inverse transform the mean prediction to get the price value
+                prediction_value = scaler.inverse_transform(mean_pred)[0][0]
                 predicted_price_decimal = Decimal(str(float(prediction_value)))
+
+                # Calculate confidence using the relative uncertainty
+                confidence = calculate_confidence(mean_pred, std_pred)[0][0]
+                # Round confidence to two decimal places
+                confidence = round(confidence, 2)
+
+                print(f"Confidence {confidence}")
 
                 # Get latest actual price
                 current_price = Decimal(str(float(data['Close'].iloc[-1])))
