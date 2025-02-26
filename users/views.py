@@ -86,8 +86,8 @@ def user_dashboard(request):
                 confidence = calculate_confidence(mean_pred, std_pred)[0][0]
                 # Round confidence to two decimal places
                 confidence = round(confidence, 2)
+                confidence_decimal = Decimal(str(confidence))
 
-                print(f"Confidence {confidence}")
 
                 # Get latest actual price
                 current_price = Decimal(str(float(data['Close'].iloc[-1])))
@@ -121,6 +121,7 @@ def user_dashboard(request):
                     stop_loss=stop_loss,
                     take_profit=take_profit,
                     signal=signal,
+                    confidence_score=confidence_decimal,
                     user=request.user
                 )
                 messages.success(
