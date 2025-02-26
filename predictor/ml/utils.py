@@ -6,6 +6,8 @@ import pandas as pd
 import requests
 import pickle
 from datetime import datetime, timedelta
+import tensorflow as tf
+
 
 # Define your symbols and time frames
 CRYPTO_SYMBOLS = ["BTC", "ETH", "BNB", "XRP", "ADA", "SOL", "DOGE", "SHIB", "TRX", "AVAX", "ATOM", "LINK"]
@@ -49,6 +51,37 @@ def fetch_candlestick_data(symbol, interval, start_time, end_time):
         raise ValueError(f"No data fetched for {symbol} at {interval}.")
 
     return df[['Open', 'High', 'Low', 'Close', 'Volume']].astype(float)
+
+
+
+def mc_dropout_prediction(model, input_data, n_iter=50):
+    """
+    Run multiple forward passes with dropout enabled (training=True) to simulate uncertainty.
+    """
+    predictions = []
+    for _ in range(n_iter):
+        pred = model(input_data, training=True)  # force dropout during inference
+        predictions.append(pred.numpy())
+    
+    predictions = np.array(predictions)
+    mean_prediction = predictions.mean(axis=0)
+    std_prediction = predictions.std(axis=0)
+    return mean_prediction, std_prediction
+
+
+def calculate_confidence(mean_pred, std_pred, epsilon=1e-6):
+    """
+    Calculate a confidence percentage.
+    Lower relative standard deviation implies higher confidence.
+    """
+    # Avoid division by zero
+    relative_uncertainty = std_pred / (np.abs(mean_pred) + epsilon)
+    # Define confidence as 100% minus the relative uncertainty scaled to 100.
+    # (You can adjust the scaling to fit your needs.)
+    confidence_percentage = np.clip(100 - (relative_uncertainty * 100), 0, 100)
+    return confidence_percentage
+
+
 
 
 
