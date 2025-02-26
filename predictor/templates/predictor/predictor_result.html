@@ -5,7 +5,7 @@
 {% block content %}
 <section class="container">
     <div class="row">
-        <article class="col-12 col-md-8 mx-auto">
+        <article class="col-12 col-md-10 mx-auto">
             <header class="pb-3 mb-4 border-bottom">
                 <h5 class="fw-bolder">PREDICTOR RESULT </h5>
                 <h3>Signals</h3>
@@ -16,10 +16,26 @@
                 {% else %}
                 <h3 class="pt-2"><span class="text-warning fw-bolder">{{prediction.signal }}</span></h3>
                 {% endif %}
-                <h5 class="pt-2">Predicted Price: <span class="text-success fw-bolder">{{ prediction.predicted_price }}</span></h5>
-                <h5 class="pt-2">Current Price: <span class="text-success fw-bolder">{{ prediction.current_price }}</span></h5>
             </header>
+        
+        </article>
+    </div>
 
+    <div class="row">
+        <article class="col-7 col-md-6 offset-md-1">
+            <h5 class="pt-2">Predicted Price: <span class="text-success fw-bolder">{{ prediction.predicted_price }}</span></h5>
+                <h5 class="pt-2">Current Price: <span class="text-success fw-bolder">{{ prediction.current_price }}</span></h5>
+        </article>
+        <article class="col-5 col-md-4">
+            <div class="border bg-light p-4">
+                <p>Confidence score</p>
+                <h5 class="fw-bold">{{prediction.confidence_score}}%</h5>
+            </div>
+        </article>
+    </div>
+    
+    <div class="row">
+        <article class="col-12 col-md-10 mx-auto">
             <div class="p-4 bg-white rounded-2">
                 <table class="table table-responsive">
                     <tr>
