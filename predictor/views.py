@@ -3,6 +3,8 @@ from .models import Prediction
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 
 @login_required
 def prediction_result(request, prediction_id):
@@ -24,7 +26,18 @@ def prediction_result(request, prediction_id):
 
 def predictions(request):
 
-    predictions = Prediction.objects.all().order_by("-timestamp")
+    prediction_list = Prediction.objects.all().order_by("-timestamp")
+
+    # Pagination settings
+    page = request.GET.get('page', 1)  # Get page number from request
+    paginator = Paginator(prediction_list, 10)
+
+    try:
+        predictions = paginator.page(page)
+    except PageNotAnInteger:
+        predictions = paginator.page(1)  # If not an integer, deliver first page.
+    except EmptyPage:
+        predictions = paginator.page(paginator.num_pages)
 
     context = {
         "title": "predictions",
