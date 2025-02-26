@@ -24,6 +24,7 @@ class Prediction(models.Model):
     take_profit = models.DecimalField(max_digits=20, decimal_places=8, default=0.00)
     signal = models.CharField(max_length=4, choices=[("BUY", "BUY"), ("SELL", "SELL"), ("HOLD", "HOLD")], default="HOLD")  # Buy/Sell Signal
     volume = models.DecimalField(max_digits=10, decimal_places=2)
+    confidence_score = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
     timestamp = models.DateTimeField(default=timezone.now)
 
 
