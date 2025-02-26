@@ -17,6 +17,7 @@
     background: var(--primary-color-2);
     z-index: 100;
     overflow-x: hidden;
+    transition: .3s ease;
 }
 
 .nav-link{
@@ -73,6 +74,7 @@ a{
         background: var(--primary-color-2);
         z-index: 100;
         overflow-x: hidden;
+        transition: .3s ease;
     }
 
     .content-wrapper{
