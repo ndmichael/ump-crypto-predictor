@@ -1,99 +1,131 @@
-{% extends 'users/base.html' %} 
-{% load static %} 
-{% load crispy_forms_tags %} 
+{% extends 'users/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
 
 {% block content %}
-<section class="container">
-    <div class="row">
-        <article class="col-12 col-md-10 mx-auto">
-            <header class="p-4">
-                <h1>Crypto Price Prediction Results</h1>
-                <p><strong class="text-primary">Date:</strong> {% now "Y-m-d" %}</p>
-                <p><strong class="text-primary">Time:</strong> {% now "H:i:s" %}</p>
-            </header>
-        </article>
-        <article class="col-6 col-md-4 mx-auto">
-            <div>
-                <i class="bi bi-count"></i>
-                <div></div>
+<section class="container-fluid py-5 px-4">
+    <div class="row mb-4">
+        <div class="col-12 col-lg-10 mx-auto">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                <div>
+                    <h1 class="fw-bold text-gradient mb-0">Crypto Price Prediction</h1>
+                    <p class="text-muted mb-0">
+                        <i class="bi bi-calendar3"></i> {% now "Y-m-d" %}
+                        &nbsp;•&nbsp;
+                        <i class="bi bi-clock"></i> {% now "H:i:s" %}
+                    </p>
+                </div>
+                <a href="{% url 'user_dashboard' %}" class="btn btn-custom shadow-sm">
+                    <i class="bi bi-plus-circle me-1"></i> New Prediction
+                </a>
             </div>
-        </article>
+        </div>
     </div>
 
-    <!-- Second rows -->
+    <!-- Stats Row -->
+    <!-- Stats Row -->
+<div class="row justify-content-center align-items-stretch g-3 mb-4">
+    <div class="col-12 col-md-4 col-lg-3">
+        <div class="stat-card p-4 shadow-sm text-center h-100">
+            <div class="stat-icon bg-primary bg-opacity-10 text-primary mb-3 mx-auto">
+                <i class="bi bi-currency-bitcoin"></i>
+            </div>
+            <h6 class="fw-semibold text-uppercase text-muted mb-1">Total Predictions</h6>
+            <h3 class="fw-bold text-primary mb-0">{{ predictions.paginator.count }}</h3>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-4 col-lg-3">
+        <div class="stat-card p-4 shadow-sm text-center h-100">
+            <div class="stat-icon bg-success bg-opacity-10 text-success mb-3 mx-auto">
+                <i class="bi bi-graph-up-arrow"></i>
+            </div>
+            <h6 class="fw-semibold text-uppercase text-muted mb-1">Latest Volume</h6>
+            <h4 class="fw-bold text-success mb-0">
+                {% if predictions|length > 0 %}
+                    {{ predictions.0.volume }}
+                {% else %}
+                    0
+                {% endif %}
+            </h4>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-4 col-lg-3">
+        <div class="stat-card p-4 shadow-sm text-center h-100">
+            <div class="stat-icon bg-info bg-opacity-10 text-info mb-3 mx-auto">
+                <i class="bi bi-coin"></i>
+            </div>
+            <h6 class="fw-semibold text-uppercase text-muted mb-1">Last Predicted Price</h6>
+            <h4 class="fw-bold text-info mb-0">
+                {% if predictions|length > 0 %}
+                    {{ predictions.0.predicted_price }}
+                {% else %}
+                    N/A
+                {% endif %}
+            </h4>
+        </div>
+    </div>
+</div>
+
+
+    <!-- Prediction Table -->
     <div class="row">
-        <article class="col-12 col-md-10 mx-auto">
-            <div class="table-responsive bg-white p-4 rounded-5">
-                <table class="table mt-4 table-hover">
-                    <thead class="bg-light">
+        <div class="col-12 col-lg-12 mx-auto">
+            <div class="table-responsive p-4 bg-white rounded-4 shadow-sm">
+                <table class="table table-hover align-middle mb-0">
+                    <thead>
                         <tr>
-                            <th scope="col">Row No</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Timeframe</th>
-                            <th scope="col">Volumes</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Date</th>
+                            <th>Row</th>
+                            <th>Name</th>
+                            <th>Timeframe</th>
+                            <th>Volume</th>
+                            <th>Predicted Price</th>
+                            <th>Date</th>
                         </tr>
                     </thead>
-                    <tbody
-                        class="
-                        animate__animated
-                        animate__fadeInUp
-                        animate_slow
-                        "
-                    >
-                        {%for prediction in predictions %}
-                        
-                        <tr>  
-                            <td>
-                                {{forloop.counter}}
-                            </td>
-                            <td>
-                                {{prediction.pair.name | upper}}
-                            </td>
-                            <td>
-                                {{prediction.pair.timeframe | upper }}
-                            </td>
-                            <td>
-                                {{prediction.volume }}
-                            </td>
-                            <td>
-                                {{prediction.predicted_price}}
-                            </td>
-
-                            <td>
-                                {{prediction.timestamp}}  
-                            </td>
+                    <tbody>
+                        {% for prediction in predictions %}
+                        <tr>
+                            <td class="fw-bold text-muted">{{ forloop.counter }}</td>
+                            <td>{{ prediction.pair.name|upper }}</td>
+                            <td><span class="badge badge-info">{{ prediction.pair.timeframe|upper }}</span></td>
+                            <td>{{ prediction.volume }}</td>
+                            <td><span class="fw-semibold text-primary">{{ prediction.predicted_price }}</span></td>
+                            <td><span class="small-muted">{{ prediction.timestamp }}</span></td>
                         </tr>
                         {% empty %}
-                        <p class="alert alert-info fw-bolder">No Prediction Recorded.</p>
+                        <tr>
+                            <td colspan="6" class="text-center py-4 text-muted">
+                                <i class="bi bi-info-circle me-2"></i> No Predictions Recorded
+                            </td>
+                        </tr>
                         {% endfor %}
                     </tbody>
                 </table>
 
-                <!-- pagination added to predictions -->
-                <div class="pt-3 text-center">
-                    {% if predictions.paginator.num_pages > 1 %}
-                        {% if predictions.has_previous %}
-                        <a class="btn btn-outline-dark" href="?page=1">First</a>
-                        <a class="btn btn-outline-dark" href="?page={{ predictions.previous_page_number }}">Previous</a>
+                <!-- Pagination -->
+                {% if predictions.paginator.num_pages > 1 %}
+                <div class="text-center mt-4">
+                    {% if predictions.has_previous %}
+                    <a class="btn btn-outline-dark btn-sm" href="?page=1">First</a>
+                    <a class="btn btn-outline-dark btn-sm" href="?page={{ predictions.previous_page_number }}">Previous</a>
+                    {% endif %}
+                    {% for num in predictions.paginator.page_range %}
+                        {% if predictions.number == num %}
+                            <a class="btn btn-primary btn-sm" href="?page={{ num }}">{{ num }}</a>
+                        {% elif num > predictions.number|add:'-3' and num < predictions.number|add:'3' %}
+                            <a class="btn btn-outline-dark btn-sm" href="?page={{ num }}">{{ num }}</a>
                         {% endif %}
-                        {% for num in predictions.paginator.page_range %}
-                            {% if predictions.number == num %}
-                                <a class="btn btn-primary" href="?page={{ num }}">{{ num }}</a>
-                            {% elif num > predictions.number|add:'-3' and num < predictions.number|add:'3' %}
-                                <a class="btn btn-outline-dark" href="?page={{ num }}">{{ num }}</a>
-                            {% endif %}
-                        {% endfor %}
-                        {% if predictions.has_next %}
-                            <a class="btn btn-outline-primary btn-lg" href="?page={{ predictions.next_page_number }}">Next</a>
-                            <a class="btn btn-dark " href="?page={{ predictions.paginator.num_pages }}">Last</a>
-                        {% endif %}
+                    {% endfor %}
+                    {% if predictions.has_next %}
+                    <a class="btn btn-outline-primary btn-sm" href="?page={{ predictions.next_page_number }}">Next</a>
+                    <a class="btn btn-dark btn-sm" href="?page={{ predictions.paginator.num_pages }}">Last</a>
                     {% endif %}
                 </div>
+                {% endif %}
             </div>
-        </article>
+        </div>
     </div>
 </section>
-
 {% endblock %}
