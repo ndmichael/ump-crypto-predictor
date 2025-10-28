@@ -1,43 +1,200 @@
-{% extends 'users/base.html' %} 
-{% load static %} 
-{% load crispy_forms_tags %} 
+{% extends 'users/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
 
 {% block content %}
-<section class="container">
-    <div class="row">
-        <article class="col-12 col-md-8 mx-auto">
-            <form action="" method="post" id="crypto-form" class="p-5 bg-white border shadow-sm rounded-2">
-                <header class="pb-3 mb-5 border-bottom">
-                    <h4>PREDICT PRICE FOR CRYPTO PAIR </h4>
-                </header>
-                {% crispy crypto_form %}
-                <button class="btn btn-custom btn-lg col-12 px-2 text-light" type="submit" id="submit-btn">
-                    <span 
-                        id="button-text"
-                        style="color: beige;"
-                    >
-                        PREDICT NOW
-                    </span>
+<div class="container-fluid py-4">
 
-                    <div 
-                        id="loader" 
-                        class="spinner-grow text-primary large" 
-                        role="status" 
-                        style="display: none; font-size:xx-large"
-                    ></div>
-                      
-                </button>
-                <div 
-                    id="processing-text" 
-                    style="display: none; margin-top: 10px;"
-                    class="text-center"
-                >
-                    <i class="bi bi-robot text-success"></i> 
-                    <span class="ps-3">AI analyzing your pairs.....</span>
-                </div>
-            </form>
-        </article>
+  <!-- DASHBOARD STATS -->
+  <section class="row g-3 mb-4">
+    <div class="col-md-3 col-6">
+      <div class="card shadow-sm border-0 p-3 stat-card">
+        <div class="d-flex align-items-center justify-content-between">
+          <div>
+            <p class="text-muted mb-1 small">Total Predictions</p>
+            <h4 class="fw-bold mb-0">145</h4>
+          </div>
+          <div class="stat-icon bg-primary-subtle text-primary">
+            <i class="bi bi-bar-chart-line"></i>
+          </div>
+        </div>
+      </div>
     </div>
-</section>
+    <div class="col-md-3 col-6">
+      <div class="card shadow-sm border-0 p-3 stat-card">
+        <div class="d-flex align-items-center justify-content-between">
+          <div>
+            <p class="text-muted mb-1 small">Accuracy Rate</p>
+            <h4 class="fw-bold mb-0 text-success">92.4%</h4>
+          </div>
+          <div class="stat-icon bg-success-subtle text-success">
+            <i class="bi bi-graph-up"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 col-6">
+      <div class="card shadow-sm border-0 p-3 stat-card">
+        <div class="d-flex align-items-center justify-content-between">
+          <div>
+            <p class="text-muted mb-1 small">Last Pair</p>
+            <h4 class="fw-bold mb-0">BTC/USDT</h4>
+          </div>
+          <div class="stat-icon bg-warning-subtle text-warning">
+            <i class="bi bi-currency-bitcoin"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 col-6">
+      <div class="card shadow-sm border-0 p-3 stat-card">
+        <div class="d-flex align-items-center justify-content-between">
+          <div>
+            <p class="text-muted mb-1 small">Next Forecast</p>
+            <h4 class="fw-bold mb-0 text-primary">2h 14m</h4>
+          </div>
+          <div class="stat-icon bg-primary-subtle text-primary">
+            <i class="bi bi-clock-history"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
+  <!-- PREDICTION FORM + CHART -->
+  <section class="row g-4 align-items-stretch mb-5">
+    <!-- FORM -->
+    <div class="col-lg-6">
+      <div class="card border-0 shadow-sm p-4 h-100">
+        <header class="pb-3 mb-4 border-bottom">
+          <h4 class="fw-bold text-primary mb-0">
+            <i class="bi bi-robot"></i> Predict Price for Crypto Pair
+          </h4>
+          <small class="text-muted">Our AI analyzes trends, volatility, and technical patterns in real-time.</small>
+        </header>
+
+        <form action="" method="post" id="crypto-form">
+          {% csrf_token %}
+          {% crispy crypto_form %}
+
+          <button class="btn btn-custom btn-lg w-100 mt-3" type="submit" id="submit-btn">
+            <span id="button-text">Predict Now</span>
+            <div id="loader" class="spinner-grow text-light" role="status" style="display:none; width:1.5rem; height:1.5rem;"></div>
+          </button>
+
+          <div id="processing-text" class="text-center mt-3 text-muted" style="display:none;">
+            <i class="bi bi-cpu"></i> AI analyzing your pairs...
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- CHART -->
+    <div class="col-lg-6">
+      <div class="card chart-card border-0 shadow-sm p-4 h-100">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="fw-bold text-primary mb-0">
+            <i class="bi bi-graph-up-arrow"></i> Live Market Overview
+          </h5>
+          <span class="text-muted small">BTC/USDT</span>
+        </div>
+        <canvas id="cryptoChart" height="280"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI INSIGHT -->
+  <section class="row mb-5">
+    <div class="col-lg-7 mx-auto">
+      <div class="card border-0 shadow-sm p-4 bg-gradient"
+           style="background: linear-gradient(90deg, #4F46E5, #6366F1); color: white;">
+        <div class="d-flex align-items-center justify-content-between">
+          <div>
+            <h5 class="fw-bold mb-1">AI Market Sentiment</h5>
+            <p class="mb-0">Market shows <strong class="text-warning">bullish momentum</strong> on BTC & ETH pairs.</p>
+          </div>
+          <i class="bi bi-activity display-6"></i>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECENT PREDICTIONS -->
+  <section class="row mb-5">
+    <div class="col-lg-10 mx-auto">
+      <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white border-0 py-3">
+          <h5 class="fw-bold text-primary mb-0"><i class="bi bi-clock-history"></i> Recent Predictions</h5>
+        </div>
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead>
+                <tr>
+                    <th>Pair</th>
+                    <th>Prediction</th>
+                    <th>Confidence</th>
+                    <th>Timestamp</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>BTC/USDT</td>
+                    <td><span class="badge badge-success">Bullish</span></td>
+                    <td>94%</td>
+                    <td><span class="small-muted">2 mins ago</span></td>
+                </tr>
+                <tr>
+                    <td>ETH/USDT</td>
+                    <td><span class="badge badge-danger">Bearish</span></td>
+                    <td>81%</td>
+                    <td><span class="small-muted">15 mins ago</span></td>
+                </tr>
+                <tr>
+                    <td>XRP/USDT</td>
+                    <td><span class="badge badge-info">Neutral</span></td>
+                    <td>88%</td>
+                    <td><span class="small-muted">1 hr ago</span></td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
+
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const ctx = document.getElementById('cryptoChart').getContext('2d');
+  const cryptoChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      datasets: [{
+        label: 'BTC/USDT Price',
+        data: [46000, 46800, 47200, 47000, 47800, 47500, 48300],
+        borderColor: '#4F46E5',
+        backgroundColor: 'rgba(99, 102, 241, 0.1)',
+        fill: true,
+        tension: 0.4,
+        pointRadius: 3,
+        pointBackgroundColor: '#4F46E5',
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: { mode: 'index', intersect: false },
+      },
+      scales: {
+        x: { grid: { display: false } },
+        y: { grid: { color: 'rgba(0,0,0,0.05)' } }
+      }
+    }
+  });
+</script>
 {% endblock %}
