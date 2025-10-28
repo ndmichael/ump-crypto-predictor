@@ -2,15 +2,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    color: black;
-}
-
-html, body{
-  font-size-adjust: none;
-  font-size: 14px;
-  font-family: "Lato", sans-serif;
-  line-height: 1.7;
-  word-spacing: 2px;
 }
 
 :root{
@@ -18,51 +9,110 @@ html, body{
     --primary-color-700: rgb(0, 0, 128, .7);
 }
 
-.landing-writeup h1{
-    text-shadow: 0 0 5px rgb(139, 139, 177);
+html, body{
+  font-family: 'Poppins', sans-serif;
+  font-size-adjust: none;
+  font-size: 14px;
+  line-height: 1.7;
+  word-spacing: 2px;
+  background-color: #0d1117;
+}
+
+/* Overlay background with moving light gradient */
+.bg-overlay {
+  background: radial-gradient(circle at 30% 20%, rgba(0, 150, 255, 0.15), transparent 70%),
+              radial-gradient(circle at 80% 80%, rgba(0, 255, 150, 0.1), transparent 70%);
+  animation: bgMove 10s infinite alternate ease-in-out;
+  z-index: 0;
+  pointer-events: none;
+}
+
+@keyframes bgMove {
+  0% { background-position: 0% 0%, 100% 100%; }
+  100% { background-position: 100% 100%, 0% 0%; }
+}
+
+/* Floating circles (like subtle glowing crypto coins) */
+.floating-shapes {
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.float-circle {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 200, 255, 0.5) 0%, transparent 50%);
+  animation: floatUp 15s infinite ease-in-out;
+  top: 90%;
+  left: 10%;
+}
+
+.float-circle.delay-1 {
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle, rgba(0, 255, 180, 0.52) 0%, transparent 50%);
+  animation-delay: 3s;
+  left: 50%;
+}
+
+.float-circle.delay-2 {
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, transparent 50%);
+  animation-delay: 6s;
+  left: 80%;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0.2;
+  }
+  50% {
+    transform: translateY(-50vh) scale(1.1);
+    opacity: 0.4;
+  }
+  100% {
+    transform: translateY(-100vh) scale(0.8);
+    opacity: 0;
+  }
 }
 
 
-#footer .icon{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 15px;
-    margin-top: 4px;
-    height: 40px;
-    width: 40px;
-    border-radius: 50%;
-    border: 1px solid var(--primary-color);
-}
-#footer .icon .bi{
-    color: var(--primary-color);
-    font-size: 1.3rem;
-    font-weight: bolder;
+
+.btn-custom, .btn-info {
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  border: none;
+  color: #fff;
+  transition: all 0.3s ease-in-out;
 }
 
-#footer .features{
-    padding-left: 20px;
+.btn-custom:hover, .btn-info:hover {
+  background: linear-gradient(90deg, #0072ff, #00c6ff);
+  transform: scale(1.05);
+  color: #fff;
 }
 
-.features p:nth-child(1){
-    font-size: 1.2rem;
-    font-family: 900;
-    color: var(--primary-color);
+.text-gradient {
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-/**
-==  CUSTOM BUTTON
-**/
-.btn-custom{
-    padding: 15px 30px;
-    background: var(--primary-color);
-    color: white;
-    font-size: small;
-    font-weight: bolder;
-    transition: .3s;
+/* Footer styling */
+.footer-section {
+  background: #0b0f14;
+  color: #ccc;
 }
 
-.btn-custom:hover{
-    background: var(--primary-color-700);
-    color: white;
+.footer-section ul li {
+  margin-bottom: 0.5rem;
+}
+
+.footer-section h6,
+.footer-section h5 {
+  color: #fff !important;
 }
