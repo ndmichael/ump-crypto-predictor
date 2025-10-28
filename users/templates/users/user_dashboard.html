@@ -12,7 +12,7 @@
         <div class="d-flex align-items-center justify-content-between">
           <div>
             <p class="text-muted mb-1 small">Total Predictions</p>
-            <h4 class="fw-bold mb-0">145</h4>
+            <h4 class="fw-bold mb-0">{{ total_predictions|default:"0" }}</h4>
           </div>
           <div class="stat-icon bg-primary-subtle text-primary">
             <i class="bi bi-bar-chart-line"></i>
@@ -25,7 +25,7 @@
         <div class="d-flex align-items-center justify-content-between">
           <div>
             <p class="text-muted mb-1 small">Accuracy Rate</p>
-            <h4 class="fw-bold mb-0 text-success">92.4%</h4>
+            <h4 class="fw-bold mb-0 text-success">{{ accuracy|default:"N/A" }}{% if accuracy %}%{% endif %}</h4>
           </div>
           <div class="stat-icon bg-success-subtle text-success">
             <i class="bi bi-graph-up"></i>
@@ -38,7 +38,12 @@
         <div class="d-flex align-items-center justify-content-between">
           <div>
             <p class="text-muted mb-1 small">Last Pair</p>
-            <h4 class="fw-bold mb-0">BTC/USDT</h4>
+            <h4 class="fw-bold mb-0">
+                {% if last_prediction %}
+                    {{ last_prediction.pair.name }}
+                {% else %}
+                    No Data
+                {% endif %}</h4>
           </div>
           <div class="stat-icon bg-warning-subtle text-warning">
             <i class="bi bi-currency-bitcoin"></i>
@@ -51,7 +56,11 @@
         <div class="d-flex align-items-center justify-content-between">
           <div>
             <p class="text-muted mb-1 small">Next Forecast</p>
-            <h4 class="fw-bold mb-0 text-primary">2h 14m</h4>
+            <h4 class="fw-bold mb-0 text-primary text-truncate" 
+                style="max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+                title="{{ next_forecast|default:'Awaiting prediction...' }}">
+            {{ next_forecast|default:"Awaiting prediction..." }}
+            </h4>
           </div>
           <div class="stat-icon bg-primary-subtle text-primary">
             <i class="bi bi-clock-history"></i>
@@ -89,33 +98,36 @@
       </div>
     </div>
 
-    <!-- CHART -->
+    <!-- Chart Card -->
     <div class="col-lg-6">
-      <div class="card chart-card border-0 shadow-sm p-4 h-100">
+    <div class="card chart-card border-0 shadow-sm p-4 h-100">
         <div class="d-flex justify-content-between align-items-center mb-3">
-          <h5 class="fw-bold text-primary mb-0">
-            <i class="bi bi-graph-up-arrow"></i> Live Market Overview
-          </h5>
-          <span class="text-muted small">BTC/USDT</span>
+        <h5 class="fw-bold text-primary mb-0">
+            <i class="bi bi-graph-up-arrow"></i> {{ chart_pair|default:"No Data" }}
+        </h5>
+        <span class="text-muted small">Predicted Trend</span>
         </div>
         <canvas id="cryptoChart" height="280"></canvas>
-      </div>
+    </div>
     </div>
   </section>
 
   <!-- AI INSIGHT -->
   <section class="row mb-5">
     <div class="col-lg-7 mx-auto">
-      <div class="card border-0 shadow-sm p-4 bg-gradient"
-           style="background: linear-gradient(90deg, #4F46E5, #6366F1); color: white;">
+      <div class="card border-0 shadow-sm p-4 bg-gradient">
         <div class="d-flex align-items-center justify-content-between">
-          <div>
+            <div>
             <h5 class="fw-bold mb-1">AI Market Sentiment</h5>
-            <p class="mb-0">Market shows <strong class="text-warning">bullish momentum</strong> on BTC & ETH pairs.</p>
-          </div>
-          <i class="bi bi-activity display-6"></i>
+            <p class="mb-0">
+                Market shows 
+                <strong class="text-warning">{{ ai_sentiment|default:"neutral" }}</strong>
+                on BTC & ETH pairs.
+            </p>
+            </div>
+            <i class="bi bi-activity display-6"></i>
         </div>
-      </div>
+    </div>
     </div>
   </section>
 
@@ -168,33 +180,73 @@
 <!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-  const ctx = document.getElementById('cryptoChart').getContext('2d');
-  const cryptoChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-      datasets: [{
-        label: 'BTC/USDT Price',
-        data: [46000, 46800, 47200, 47000, 47800, 47500, 48300],
-        borderColor: '#4F46E5',
-        backgroundColor: 'rgba(99, 102, 241, 0.1)',
-        fill: true,
-        tension: 0.4,
-        pointRadius: 3,
-        pointBackgroundColor: '#4F46E5',
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { display: false },
-        tooltip: { mode: 'index', intersect: false },
+const ctx = document.getElementById('cryptoChart').getContext('2d');
+
+const cryptoChart = new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: {{ chart_labels|safe }},
+    datasets: [{
+      label: '{{ chart_pair|default:"Crypto" }} Predicted Price',
+      data: {{ chart_data|safe }},
+      borderColor: '#6366F1',
+      backgroundColor: 'rgba(99, 102, 241, 0.1)',
+      fill: true,
+      tension: 0.4,
+      pointRadius: 3,
+      pointBackgroundColor: '#4F46E5',
+      borderWidth: 2
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+
+    // ✅ Correct modern animation config for Chart.js 4+
+    animations: {
+      tension: {
+        duration: 1500,
+        easing: 'easeOutQuart',
+        from: 0.2,
+        to: 0.4,
+        loop: false
       },
-      scales: {
-        x: { grid: { display: false } },
-        y: { grid: { color: 'rgba(0,0,0,0.05)' } }
+      y: {
+        duration: 1200,
+        easing: 'easeOutCubic',
+        from: (ctx) => ctx.type === 'data' ? 0 : undefined,
+        delay: (ctx) => ctx.dataIndex * 120
+      },
+      x: {
+        duration: 800,
+        easing: 'easeOutQuart'
+      }
+    },
+
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: '#1E293B',
+        titleColor: '#FFF',
+        bodyColor: '#E2E8F0',
+        padding: 10,
+        displayColors: false,
+        usePointStyle: true,
+      },
+    },
+    scales: {
+      x: {
+        grid: { display: false },
+        ticks: { color: '#64748B', font: { size: 12, weight: '600' } }
+      },
+      y: {
+        grid: { color: 'rgba(0,0,0,0.05)' },
+        ticks: { color: '#475569', font: { size: 12, weight: '600' } }
       }
     }
-  });
+  }
+});
 </script>
+
+
 {% endblock %}
