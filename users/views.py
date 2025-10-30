@@ -173,11 +173,17 @@ def user_dashboard(request):
         else:
             next_forecast = "Neutral - Market indecisive"
 
-    predictions = Prediction.objects.filter(user=request.user).order_by('-timestamp')[:20][::-1]  # latest 20 reversed
+    predictions = list(Prediction.objects.filter(user=request.user).order_by('-timestamp')[:20])
+    predictions.reverse()  # ensures chronological order
 
-    # prepare data for Chart.js
-    labels = [p.timestamp.strftime('%b %d') for p in predictions]
-    data = [float(p.predicted_price) for p in predictions]
+    if len(predictions) < 2:
+        labels = [datetime.now().strftime('%b %d')]
+        data = [0]
+    else:
+        labels = [p.timestamp.strftime('%b %d') for p in predictions]
+        data = [float(p.predicted_price) for p in predictions]
+
+    last_updated = predictions[-1].timestamp.strftime('%b %d, %Y %I:%M %p') if predictions else "No Data"
     current_pair = predictions[-1].pair.name if predictions else "N/A"
 
     ai_sentiment = "bullish" if last_prediction and last_prediction.signal == "BUY" else \
@@ -193,6 +199,7 @@ def user_dashboard(request):
         "chart_labels": json.dumps(labels, cls=DjangoJSONEncoder),
         "chart_data": json.dumps(data, cls=DjangoJSONEncoder),
         "chart_pair": current_pair,
+        "last_updated": last_updated,
         "ai_sentiment": ai_sentiment.capitalize()
     }
     return render(request, "users/user_dashboard.html", context)
