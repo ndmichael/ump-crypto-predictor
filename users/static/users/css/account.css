@@ -1,3 +1,8 @@
+/* ================================
+   🌙 UMP Dashboard — Clean CSS
+   ================================ */
+
+/* === ROOT COLORS === */
 :root {
   --primary: #4f46e5;
   --primary-dark: #3730a3;
@@ -9,115 +14,240 @@
   --text-color: #0f172a;
 }
 
-/* GENERAL RESET */
+/* === RESET === */
 body {
   background: var(--content-bg);
   color: var(--text-color);
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   margin: 0;
   padding: 0;
 }
 
-/* SIDEBAR */
+/* ================================
+   🧭 SIDEBAR — Modern Premium Look
+================================ */
 #sidebar {
   width: 250px;
   height: 100%;
   position: fixed;
   left: 0;
   top: 0;
-  background: var(--sidebar-bg);
+  background: linear-gradient(180deg, #1e1e2d 0%, #171725 100%);
   color: #e5e7eb;
   transition: all 0.3s ease;
   z-index: 100;
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.25);
 }
 
+/* === LOGO AREA === */
 #sidebar .navbar-brand {
   display: block;
   text-align: center;
-  padding: 1.5rem 0;
+  padding: 1.4rem 0;
   font-weight: 700;
-  font-size: 1.2rem;
-  background: var(--primary);
-  color: #fff !important;
+  font-size: 1.3rem;
+  background: linear-gradient(90deg, #4f46e5, #6366f1);
+  color: #fff;
+  text-transform: uppercase;
   letter-spacing: 1px;
+  box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
 }
 
+/* === NAV LINKS === */
 #sidebar ul {
   list-style: none;
   padding-left: 0;
+  margin-top: 1rem;
 }
 
 .nav-link {
   display: flex;
   align-items: center;
   padding: 12px 1.5rem;
-  color: #e5e7eb !important;
+  color: #cbd5e1;
   font-weight: 500;
+  font-size: 0.95rem;
   border-left: 4px solid transparent;
-  transition: all 0.3s ease;
+  transition: background 0.2s ease, border-color 0.2s ease;
+  text-decoration: none;
 }
 
 .nav-link .bi {
-  margin-right: 10px;
+  margin-right: 12px;
+  font-size: 1.05rem;
+  color: #a5b4fc;
 }
 
-.nav-link:hover,
-.nav-link.active {
-  background-color: var(--sidebar-hover);
-  color: #fff !important;
+/* Active/hover state: clean, not flashy */
+.nav-link.active,
+.nav-link:hover {
+  background-color: #2a2a40;
+  color: #fff;
   border-left: 4px solid var(--primary);
 }
 
-/* SIDEBAR FOOTER */
-#sidebar .pt-lg-5 {
-  font-size: 0.85rem;
-  opacity: 0.7;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding-top: 1.5rem;
+/* === Predict Button (Main Call-to-Action) === */
+.nav-link.nav-predict {
+  margin: 0.8rem 1rem;
+  background: linear-gradient(90deg, #4f46e5, #6366f1);
+  color: #fff;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  padding: 10px 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  box-shadow: 0 3px 10px rgba(79, 70, 229, 0.25);
+  transition: transform 0.1s ease-in-out;
 }
 
-/* CONTENT AREA */
+.nav-link.nav-predict .bi {
+  color: #fff;
+  margin-right: 10px;
+  font-size: 1.1rem;
+}
+
+/* No color shift — just a subtle lift */
+.nav-link.nav-predict:hover {
+  transform: translateY(-1px);
+}
+
+/* === SIDEBAR FOOTER === */
+#sidebar .pt-lg-5 {
+  font-size: 0.85rem;
+  opacity: 0.65;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 1.2rem 1rem;
+  margin-top: auto;
+  text-align: center;
+  color: #a1a1aa;
+}
+
+#sidebar .pt-lg-5 strong {
+  display: block;
+  color: #e5e7eb;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+
+/* ================================
+   🧩 CONTENT WRAPPER (Enhanced)
+================================ */
 .content-wrapper {
   padding-left: 250px;
   min-height: 100vh;
-  background: var(--content-bg);
+  background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+  color: #e2e8f0;
   transition: all 0.3s ease;
+  position: relative;
 }
 
+/* Add gentle inner glow + depth */
+.content-wrapper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at top left,
+    rgba(99, 102, 241, 0.08),
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+/* ================================
+   🔹 NAVBAR (Polished)
+================================ */
 .content-wrapper .navbar {
-  background: var(--navbar-bg);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-.content-wrapper .navbar p {
-  color: var(--text-color);
-}
-
-/* FORM CARD */
-form#crypto-form {
-  background: var(--card-bg);
-  border-radius: 10px;
-  padding: 2.5rem;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
-}
-
-form#crypto-form h4 {
-  color: var(--primary);
-  font-weight: 700;
-  border-bottom: 2px solid rgba(79, 70, 229, 0.2);
-  padding-bottom: 10px;
-}
-
-/* Dashboard Enhancements */
-.stat-card {
-  border-radius: 12px;
-  background: #fff;
+  background: rgba(30, 41, 59, 0.85);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  padding: 1rem 2rem;
   transition: all 0.3s ease;
 }
+
+/* Navbar hover glow (subtle premium) */
+.content-wrapper .navbar:hover {
+  background: rgba(30, 41, 59, 0.92);
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.1);
+}
+
+/* ================================
+   🔹 NAVBAR TEXT & ELEMENTS
+================================ */
+.content-wrapper .navbar p,
+.content-wrapper .navbar h5,
+.content-wrapper .navbar a,
+.content-wrapper .navbar .nav-link {
+  color: #e2e8f0;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  transition: color 0.3s ease;
+}
+
+.content-wrapper .navbar p span {
+  color: #818cf8; /* subtle purple accent */
+}
+
+.content-wrapper .navbar a:hover,
+.content-wrapper .navbar .nav-link:hover {
+  color: #a5b4fc;
+}
+
+/* ================================
+   🔹 RESPONSIVE TWEAKS
+================================ */
+@media (max-width: 992px) {
+  .content-wrapper {
+    padding-left: 0;
+  }
+
+  .content-wrapper .navbar {
+    border-radius: 0;
+    padding: 1rem;
+  }
+}
+
+
+/* ================================
+   📊 STAT CARD — Refined Dark Mode Premium
+================================ */
+.stat-card {
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.08); /* slightly darker glass */
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 1.25rem 1.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+}
+
 .stat-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  border-color: rgba(99, 102, 241, 0.25);
 }
+
+/* text colors — visible on dark backgrounds */
+.stat-card p {
+  color: rgba(235, 235, 245, 0.6) !important;
+  font-size: 0.85rem;
+  margin-bottom: 0.25rem;
+  letter-spacing: 0.3px;
+}
+
+.stat-card h4 {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+/* make icons softly luminous */
 .stat-icon {
   width: 48px;
   height: 48px;
@@ -125,228 +255,94 @@ form#crypto-form h4 {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  font-size: 1.2rem;
+  font-size: 1.25rem;
+  box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.08),
+              0 0 8px rgba(255, 255, 255, 0.08);
+}
+
+/* subtle glow tone for each color */
+.stat-icon.bg-primary-subtle {
+  background: rgba(99, 102, 241, 0.15) !important;
+  color: #8b93ff !important;
+}
+
+.stat-icon.bg-success-subtle {
+  background: rgba(16, 185, 129, 0.15) !important;
+  color: #4ade80 !important;
+}
+
+.stat-icon.bg-warning-subtle {
+  background: rgba(245, 158, 11, 0.15) !important;
+  color: #facc15 !important;
+}
+
+.stat-icon.bg-danger-subtle {
+  background: rgba(239, 68, 68, 0.15) !important;
+  color: #f87171 !important;
 }
 
 
-/* === STAT CARDS === */
-.stat-card {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 1rem;
-  backdrop-filter: blur(10px);
-  transition: all 0.3s ease-in-out;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.stat-card:hover {
-  transform: translateY(-3px);
-  border-color: #6366f1;
-  box-shadow: 0 0 15px rgba(99, 102, 241, 0.2);
-}
-
-.stat-icon {
-  width: 45px;
-  height: 45px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  font-size: 1.3rem;
-}
-
-/* === CUSTOM BUTTON === */
-.btn-custom {
-  background: linear-gradient(90deg, #6366f1, #4f46e5);
-  border: none;
-  border-radius: 8px;
-  color: #fff !important;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  transition: all 0.3s ease-in-out;
-}
-
-.btn-custom:hover {
-  background: linear-gradient(90deg, #4f46e5, #3b82f6);
-  transform: scale(1.03);
-  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);
-}
-
-/* === CRYPTO FORM FIXED === */
-#crypto-form {
-  background: rgba(17, 25, 40, 0.75); /* darker glass */
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 16px;
-  color: #f3f4f6;
-  padding: 2rem;
-}
-
-/* === UNIVERSAL TABLE THEME (applies to all .table elements) === */
-
-/* Core table container */
-.table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  background: #ffffff;
+/* ================================
+   💠 AI INSIGHT CARD — Match Chart Style
+================================ */
+.ai-card {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
   border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
-  transition: all 0.2s ease-in-out;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+  transition: all 0.3s ease;
 }
 
-/* Header styling */
-.table thead {
-  background: linear-gradient(90deg, rgba(79,70,229,0.12), rgba(99,102,241,0.08));
-  border-bottom: 2px solid rgba(99, 102, 241, 0.5);
-}
-
-.table thead th {
-  font-weight: 700;
-  color: #000;
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-  font-size: 0.85rem;
-  padding: 14px 18px;
-  border: none !important;
+.ai-card:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(99, 102, 241, 0.25);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
 }
 
 
-
-/* Body styling */
-.table tbody tr {
-  background: #fff;
-  transition: background 0.2s ease, transform 0.2s ease;
-}
-.table tbody tr:nth-child(odd) {
-  background: #fafafa;
-}
-.table tbody tr:hover {
-  background: rgb(99, 102, 241) !important;
-}
-
-.table td {
-  padding: 14px 18px;
-  border: none !important;
-  vertical-align: middle;
-  font-size: 0.85rem;
-  color: #1f2937;
-}
-
-/* Small text / timestamps */
-.table .small-muted {
-  font-size: 0.85rem;
-  color: #6b7280;
-}
-
-/* Table borders (optional subtle effect) */
-.table tr:last-child td {
-  border-bottom: none;
-}
-
-/* Badges: clean universal theme */
-.badge {
-  font-size: 0.8rem;
-  font-weight: 600;
-  padding: 0.4rem 0.6rem;
-  border-radius: 999px;
-  border: 1px solid transparent;
-}
-
-/* Consistent badge variants */
-.badge-success {
-  background: rgba(16, 185, 129, 0.12) !important;
-  color: #10b981 !important;
-  border-color: rgba(16, 185, 129, 0.12);
-}
-.badge-danger {
-  background: rgba(239, 68, 68, 0.1) !important;
-  color: #ef4444 !important;
-  border-color: rgba(239, 68, 68, 0.1);
-}
-.badge-warning {
-  background: rgba(250, 204, 21, 0.15) !important;
-  color: #ca8a04 !important;
-  border-color: rgba(250, 204, 21, 0.15);
-}
-.badge-info {
-  background: rgba(99, 102, 241, 0.1) !important;
-  color: #4f46e5 !important;
-  border-color: rgba(99, 102, 241, 0.1);
-}
-.badge-secondary {
-  background: rgba(107, 114, 128, 0.1) !important;
-  color: #374151 !important;
-  border-color: rgba(107, 114, 128, 0.1);
-}
-
-/* Responsive tables */
-.table-responsive {
-  border-radius: 12px;
-  overflow-x: auto;
-}
-
-/* Dark mode / glass backgrounds (if you ever use them) */
-[data-theme="dark"] .table {
-  background: rgba(30, 41, 59, 0.9);
-  color: #e5e7eb;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-}
-[data-theme="dark"] .table thead {
-  background: rgba(79, 70, 229, 0.2);
-}
-[data-theme="dark"] .table tbody tr:hover {
-  background: rgba(99, 102, 241, 0.15);
-}
-[data-theme="dark"] .table td,
-[data-theme="dark"] .table th {
-  color: #e5e7eb;
-}
-
-
-/* === AI Insight Card === */
-
-.bg-gradient {
-  display: block;
-  min-height: 100px;
-  border-radius: 12px !important;
-  background: linear-gradient(90deg, #4F46E5, #6366F1) !important;
-  color: #fff !important; /* white text for visibility */
-  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.25);
-}
-
-/* === CHART CARD (Fixed Hover + Animation) === */
+/* ================================
+   📈 CHART CARD — Premium Dark Mode
+================================ */
 .card.chart-card {
-  background: linear-gradient(180deg, #ffffff 0%, #f9fafb 100%);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
   border-radius: 1rem;
-  border: 1px solid rgba(99, 102, 241, 0.1);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
   padding: 1.5rem;
   height: 100%;
   transition: all 0.3s ease-in-out;
   opacity: 0;
   transform: translateY(20px);
   animation: fadeUp 0.8s ease-out forwards;
-  position: relative;
-  z-index: 0;
 }
 
-/* 🟣 Hover effect */
 .card.chart-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 25px rgba(99, 102, 241, 0.18);
-  border-color: rgba(99, 102, 241, 0.3);
+  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(99, 102, 241, 0.25);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
 }
 
-/* Ensure the chart fits perfectly inside */
+/* header text colors */
+.chart-card h5 {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.chart-card .text-muted {
+  color: rgba(235, 235, 245, 0.6) !important;
+}
+
+/* Chart canvas adjustments */
 .card.chart-card canvas {
   width: 100% !important;
   height: 280px !important;
   display: block;
+  background: transparent;
 }
 
-/* Entry fade-up animation */
+/* animation */
 @keyframes fadeUp {
   from {
     opacity: 0;
@@ -359,41 +355,151 @@ form#crypto-form h4 {
 }
 
 
+/* ================================
+   🔘 BUTTONS
+================================ */
+.btn-custom {
+  background: linear-gradient(90deg, #6366f1, #4f46e5);
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease-in-out;
+}
 
-/* .card.shadow-sm.p-4.h-100 {
-  background: var(--card-bg);
+.btn-custom:hover {
+  background: linear-gradient(90deg, #4f46e5, #3b82f6);
+  transform: scale(1.03);
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);
+}
+
+/* ================================
+   🧮 GLOBAL TABLE STYLE (Dashboard-wide)
+================================ */
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
   border-radius: 12px;
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.05);
-  transition: transform 0.3s ease;
-}
-.card.shadow-sm.p-4.h-100:hover {
-  transform: translateY(-4px);
-} */
-
-
-canvas {
-  width: 100% !important;
-  height: 300px !important;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease-in-out;
 }
 
-/* Gradient text utility */
+.table thead {
+  background: linear-gradient(90deg, rgba(99, 102, 241, 0.15), rgba(79, 70, 229, 0.25));
+  border-bottom: 1px solid rgba(99, 102, 241, 0.3);
+}
+
+.table thead th {
+  font-weight: 600;
+  color: #e5e7eb;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.8rem;
+  padding: 14px 18px;
+  border: none;
+}
+
+.table tbody tr {
+  background: rgba(255, 255, 255, 0.04);
+  transition: background 0.2s ease, transform 0.2s ease;
+  color: #f1f5f9;
+}
+
+.table tbody tr:nth-child(odd) {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.table tbody tr:hover {
+  background: rgba(99, 102, 241, 0.2);
+  color: #fff;
+}
+
+.table td {
+  padding: 14px 18px;
+  border: none;
+  vertical-align: middle;
+  font-size: 0.85rem;
+  color: #e2e8f0;
+}
+
+/* === Badges === */
+.badge {
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.4rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  backdrop-filter: blur(6px);
+}
+
+.badge-success {
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+}
+.badge-danger {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+}
+.badge-warning {
+  background: rgba(250, 204, 21, 0.15);
+  color: #facc15;
+}
+.badge-info {
+  background: rgba(99, 102, 241, 0.2);
+  color: #818cf8;
+}
+.badge-secondary {
+  background: rgba(107, 114, 128, 0.15);
+  color: #d1d5db;
+}
+
+/* Subtle muted text */
+.small-muted {
+  color: #9ca3af;
+  font-size: 0.78rem;
+}
+
+/* Override Bootstrap defaults */
+.table,
+.table-responsive,
+.table > :not(caption) > * > * {
+  background-color: transparent !important;
+}
+
+/* Remove Bootstrap's default white background on table rows */
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+  background-color: transparent !important;
+}
+
+
+
+/* ================================
+   ✨ UTILITIES
+================================ */
 .text-gradient {
-  background: linear-gradient(90deg, #4F46E5, #6366F1);
+  background: linear-gradient(90deg, #4f46e5, #6366f1);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-
-/* RESPONSIVE */
+/* ================================
+   📱 RESPONSIVE
+================================ */
 @media (max-width: 768px) {
   #sidebar {
     width: 0;
     overflow: hidden;
   }
   #sidebar.toggler {
-    width: 250px !important;
+    width: 250px;
   }
   .content-wrapper {
     padding-left: 0;
   }
 }
+
