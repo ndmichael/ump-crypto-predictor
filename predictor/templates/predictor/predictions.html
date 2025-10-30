@@ -108,8 +108,8 @@
                 {% if predictions.paginator.num_pages > 1 %}
                 <div class="text-center mt-4">
                     {% if predictions.has_previous %}
-                    <a class="btn btn-outline-dark btn-sm" href="?page=1">First</a>
-                    <a class="btn btn-outline-dark btn-sm" href="?page={{ predictions.previous_page_number }}">Previous</a>
+                    <a class="btn btn-light btn-sm" href="?page=1">First</a>
+                    <a class="btn btn-light btn-sm" href="?page={{ predictions.previous_page_number }}">Previous</a>
                     {% endif %}
                     {% for num in predictions.paginator.page_range %}
                         {% if predictions.number == num %}
