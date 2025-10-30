@@ -487,6 +487,90 @@ body {
   -webkit-text-fill-color: transparent;
 }
 
+.btn-custom:hover {
+  background: linear-gradient(90deg, #4f46e5, #4338ca);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 18px rgba(99, 102, 241, 0.35);
+}
+
+
+/* ================================
+   🌌 FORM & CARD STYLING (Glass UI - Fixed)
+=================================== */
+.card {
+  background: rgba(255, 255, 255, 0.07) !important;
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  color: #e2e8f0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  transition: all 0.3s ease-in-out;
+}
+
+.card:hover {
+  background: rgba(255, 255, 255, 0.13);
+  border-color: rgba(99, 102, 241, 0.3);
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.35);
+  transform: translateY(-2px);
+}
+
+/* === Floating Labels === */
+.form-floating label {
+  color: rgba(91, 88, 88, 0.8) !important;
+  background: transparent !important;
+  transition: all 0.2s ease-in-out;
+}
+
+/* === Inputs & Selects === */
+.form-floating > .form-control,
+.form-floating > .form-select {
+  background-color: rgba(255, 255, 255, 0.06) !important;
+  color: #f8fafc !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-radius: 10px;
+  transition: all 0.2s ease-in-out;
+}
+
+/* === Fix invisible text in dropdown options === */
+.form-select option {
+  background-color: #1e1e2a !important; /* dark surface */
+  color: #f8fafc !important; /* light text */
+}
+
+/* Focus states */
+.form-floating > .form-control:focus,
+.form-floating > .form-select:focus {
+  color: #fff !important;
+  background-color: rgba(99, 102, 241, 0.12) !important;
+  border-color: rgba(99, 102, 241, 0.45) !important;
+  box-shadow: 0 0 0 0.25rem rgba(99, 102, 241, 0.25);
+}
+
+/* === Dropdown arrow visibility fix === */
+.form-select {
+  background-image: var(--bs-form-select-bg-img), linear-gradient(transparent, transparent);
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 16px 12px;
+}
+
+/* === Button consistency === */
+.btn-custom {
+  background: linear-gradient(90deg, #6366f1, #4f46e5);
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn-custom:hover {
+  background: linear-gradient(90deg, #4f46e5, #4338ca);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 18px rgba(99, 102, 241, 0.35);
+}
+
+
 /* ================================
    📱 RESPONSIVE
 ================================ */
