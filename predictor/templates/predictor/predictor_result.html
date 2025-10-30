@@ -1,76 +1,145 @@
-{% extends 'users/base.html' %} 
-{% load static %} 
-{% load crispy_forms_tags %} 
+{% extends 'users/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
 
 {% block content %}
-<section class="container">
-    <div class="row">
-        <article class="col-12 col-md-10 mx-auto">
-            <header class="pb-3 mb-4 border-bottom">
-                <h5 class="fw-bolder">PREDICTOR RESULT </h5>
-                <h3>Signals</h3>
-                {% if prediction.signal == 'SELL' %}
-                <h3 class="pt-2"><span class="text-danger fw-bolder">{{prediction.signal }}</span></h3>
-                {% elif prediction.signal == 'BUY' %}
-                <h3 class="pt-2"><span class="text-success fw-bolder">{{prediction.signal }}</span></h3>
-                {% else %}
-                <h3 class="pt-2"><span class="text-warning fw-bolder">{{prediction.signal }}</span></h3>
-                {% endif %}
-            </header>
-        
-        </article>
+<section class="result-section position-relative py-5">
+  <!-- Background Overlay -->
+  <div class="bg-overlay"></div>
+
+  <div class="container position-relative">
+    <!-- Header -->
+    <div class="text-center mb-5">
+      <h2 class="fw-bold text-gradient mb-2">AI Prediction Result</h2>
+      <p class="text-muted">Market forecast powered by advanced neural models</p>
     </div>
 
-    <div class="row">
-        <article class="col-7 col-md-6 offset-md-1">
-            <h5 class="pt-2">Predicted Price: <span class="text-success fw-bolder">{{ prediction.predicted_price }}</span></h5>
-                <h5 class="pt-2">Current Price: <span class="text-success fw-bolder">{{ prediction.current_price }}</span></h5>
-        </article>
-        <article class="col-5 col-md-4">
-            <div class="border bg-light p-4">
-                <p>Confidence score</p>
-                <h5 class="fw-bold">{{prediction.confidence_score}}%</h5>
+    <!-- Main Result Card -->
+    <div class="row justify-content-center mb-5">
+      <div class="col-md-8">
+        <div class="glass-card p-5 text-center">
+          <h5 class="fw-semibold text-muted mb-2">Signal</h5>
+          {% if prediction.signal == 'SELL' %}
+          <span class="badge bg-danger px-4 py-2 fs-5 fw-bold">{{ prediction.signal }}</span>
+          {% elif prediction.signal == 'BUY' %}
+          <span class="badge bg-success px-4 py-2 fs-5 fw-bold">{{ prediction.signal }}</span>
+          {% else %}
+          <span class="badge bg-warning text-dark px-4 py-2 fs-5 fw-bold">{{ prediction.signal }}</span>
+          {% endif %}
+
+          <div class="mt-4">
+            <h6 class="text-secondary">Predicted Price</h6>
+            <h2 class="fw-bold text-success mb-0">${{ prediction.predicted_price }}</h2>
+            <p class="text-muted">Current: <span class="fw-bold text-light">${{ prediction.current_price }}</span></p>
+          </div>
+
+          <div class="mt-4">
+            <h6 class="fw-semibold text-secondary mb-2">Model Confidence</h6>
+            <div class="progress bg-dark-subtle bg-opacity-25" style="height: 18px;">
+              <div
+                class="progress-bar progress-bar-striped progress-bar-animated bg-success fw-bold"
+                role="progressbar"
+                style="width: {{ prediction.confidence_score }}%;"
+              >
+                {{ prediction.confidence_score }}%
+              </div>
             </div>
-        </article>
+          </div>
+        </div>
+      </div>
     </div>
-    
-    <div class="row">
-        <article class="col-12 col-md-10 mx-auto">
-            <div class="p-4 bg-white rounded-2">
-                <table class="table table-responsive">
-                    <tr>
-                        <td>PAIRS</td>
-                        <td class="fw-bolder text-end text-success">{{prediction.pair.name | upper}}</td>
-                    </tr>
-    
-                    <tr>
-                        <td>Time Frame:</td>
-                        <td class="fw-bold text-end">in, {{prediction.pair.timeframe}}</td>
-                    </tr>
 
-                    <tr>
-                        <td>Predicted Price:</td>
-                        <td class="fw-bold text-end">{{prediction.predicted_price}}</td>
-                    </tr>
-
-                    <tr>
-                        <td>Current Price:</td>
-                        <td class="fw-bold text-end">{{prediction.current_price}}</td>
-                    </tr>
-    
-                    <tr>
-                        <td>Volume:</td>
-                        <td class="fw-bold text-end">{{prediction.volume}}</td>
-                    </tr>
-    
-                    <tr>
-                        <td>Date:</td>
-                        <td class="fw-bold text-end">{{prediction.timestamp}}</td>
-                    </tr>
-                </table>
-            </div> 
-        </article>
+    <!-- Details Table -->
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="glass-card p-4">
+          <h6 class="fw-bold text-secondary text-uppercase mb-3">Trade Details</h6>
+          <table class="table table-borderless align-middle text-light mb-0">
+            <tbody>
+              <tr>
+                <td class="text-secondary">Pair</td>
+                <td class="text-end fw-semibold text-uppercase">{{ prediction.pair.name }}</td>
+              </tr>
+              <tr>
+                <td class="text-secondary">Time Frame</td>
+                <td class="text-end fw-semibold">{{ prediction.pair.timeframe }}</td>
+              </tr>
+              <tr>
+                <td class="text-secondary">Volume</td>
+                <td class="text-end fw-semibold">{{ prediction.volume }}</td>
+              </tr>
+              <tr>
+                <td class="text-secondary">Predicted Price</td>
+                <td class="text-end fw-semibold text-success">${{ prediction.predicted_price }}</td>
+              </tr>
+              <tr>
+                <td class="text-secondary">Current Price</td>
+                <td class="text-end fw-semibold text-info">${{ prediction.current_price }}</td>
+              </tr>
+              <tr>
+                <td class="text-secondary">Date</td>
+                <td class="text-end fw-semibold text-muted">{{ prediction.timestamp }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
+  </div>
 </section>
 
+<!-- Styles -->
+<style>
+  /* Background image and overlay */
+  .result-section {
+    background: url("{% static 'pages/images/bg3.jpeg' %}") no-repeat center center/cover;
+    min-height: 100vh;
+    position: relative;
+  }
+
+  .bg-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(11, 15, 25, 0.9);
+    backdrop-filter: blur(10px);
+    z-index: 0;
+  }
+
+  /* Card styles */
+  .glass-card {
+    background: rgba(17, 25, 40, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 1rem;
+    backdrop-filter: blur(12px);
+    color: #e0e0e0;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+  }
+
+  .glass-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Text and color utilities */
+  .text-gradient {
+    background: linear-gradient(90deg, #38bdf8, #818cf8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .text-muted { color: #a1a1aa !important; }
+  .text-secondary { color: #9ca3af !important; }
+  .text-light { color: #f9fafb !important; }
+
+  .table td {
+    padding: 0.7rem;
+  }
+
+  body {
+    background-color: #0b0f19 !important;
+  }
+</style>
 {% endblock %}
