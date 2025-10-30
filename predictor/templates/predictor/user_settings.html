@@ -1,48 +1,117 @@
-{% extends 'users/base.html' %} 
-{% load static %} 
-{% load crispy_forms_tags %} 
+{% extends 'users/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
 
 {% block content %}
-<section class="container">
-    <div class="row">
-        <article class="col-12 col-md-12 text-center">
-            <header class="pb-4">
-                <h2>Basic settings </h2>
-            </header>
-        </article>
+<style>
+    /* Background & overlay */
+    .settings-section {
+        position: relative;
+        background: url("{% static 'pages/images/bg3.jpeg' %}") center/cover no-repeat;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        padding: 80px 0;
+    }
+    .settings-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 40, 0.6);
+        backdrop-filter: blur(5px);
+        z-index: 1;
+    }
+
+    /* Content styling */
+    .settings-content {
+        position: relative;
+        z-index: 2;
+        color: #fff;
+    }
+
+    /* Section header */
+    .section-title {
+        font-size: 2rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        margin-bottom: 40px;
+        color: #fff;
+        text-shadow: 0 2px 5px rgba(0,0,0,0.4);
+    }
+
+    /* Card styling */
+    .settings-card {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 16px;
+        transition: all 0.4s ease;
+        padding: 50px 20px;
+        color: #fff;
+        text-decoration: none;
+        display: block;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .settings-card:hover {
+        transform: translateY(-8px) scale(1.02);
+        background: rgba(255, 255, 255, 0.2);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    }
+
+    .settings-card i {
+        font-size: 2.2rem;
+        color: #ffd700;
+        margin-bottom: 10px;
+    }
+
+    .settings-card h5 {
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        margin-top: 10px;
+        color: #fff;
+    }
+
+    /* Responsive tweak */
+    @media (max-width: 768px) {
+        .settings-card {
+            margin-bottom: 20px;
+        }
+    }
+</style>
+
+<section class="settings-section">
+    <div class="settings-overlay"></div>
+
+    <div class="container settings-content">
+        <div class="row text-center mb-5">
+            <h2 class="section-title">⚙️ Account Preferences</h2>
+            <p class="text-light">Manage your account settings easily and securely.</p>
+        </div>
+
+        <div class="row justify-content-center g-4">
+            <div class="col-12 col-md-4 col-lg-3">
+                <a href="{% url 'account_change_password' %}" class="settings-card">
+                    <i class="bi bi-shield-lock"></i>
+                    <h5>Change Password</h5>
+                </a>
+            </div>
+
+            <div class="col-12 col-md-4 col-lg-3">
+                <a href="{% url 'account_email' %}" class="settings-card">
+                    <i class="bi bi-envelope-at-fill"></i>
+                    <h5>Change Email</h5>
+                </a>
+            </div>
+
+            <div class="col-12 col-md-4 col-lg-3">
+                <a href="#" class="settings-card">
+                    <i class="bi bi-person-gear"></i>
+                    <h5>Profile Settings</h5>
+                </a>
+            </div>
+        </div>
     </div>
-
-    <div class="row">
-        <article class="col-12 col-md-3 mb-5 offset-md-3">
-            <a 
-                href="{% url 'account_change_password' %}" 
-                class="border p-5 text-center"
-                style="background: #120084; color:white"
-            >
-                <i class="bi bi-shield-lock" style="font-size: 20px; color:#042df5"></i>
-                <h5>CHANGE PASSWORD</h5>
-            </a>
-        </article>
-
-        <article class="col-12 col-md-3 mb-5">
-            <a 
-                href="{% url 'account_email' %}" 
-                class="border p-5 text-center"
-                style="background: #006784; color:white"
-            >
-                <i class="bi bi-envelope-at-fill" style="font-size: 20px; color:#061669"></i>
-                <h5>Change you Email</h5>
-            </a>
-        </article>
-
-        <article class="col-12 col-md-6 mx-auto">
-            <img 
-                src="{% static 'pages/images/bg3.jpeg' %}" 
-                alt="" 
-                class="img-fluid"
-                style="height: 350px; width: 100%; object-fit: cover;"
-            >
-        </article>
 </section>
-
 {% endblock %}
