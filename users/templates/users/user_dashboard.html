@@ -150,7 +150,7 @@
 </div>
 
 <!-- Chart.js -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0"></script>
 <script>
 const ctx = document.getElementById('cryptoChart').getContext('2d');
 
@@ -161,27 +161,30 @@ const cryptoChart = new Chart(ctx, {
     datasets: [{
       label: '{{ chart_pair|default:"Crypto" }} Predicted Price',
       data: {{ chart_data|safe }},
-      borderColor: '#818CF8', // Softer neon blue
-      backgroundColor: 'rgba(99, 102, 241, 0.15)',
+      borderColor: '#6366F1',
+      backgroundColor: 'rgba(99, 102, 241, 0.12)',
       fill: true,
       tension: 0.4,
-      pointRadius: 3,
+      pointRadius: 4,
+      pointHoverRadius: 7,
       pointBackgroundColor: '#A5B4FC',
+      pointHoverBackgroundColor: '#818CF8',
       borderWidth: 2.2,
-      shadowColor: '#6366F1',
-      shadowBlur: 8
     }]
   },
   options: {
     responsive: true,
     maintainAspectRatio: false,
-
-    // 🎞 Smooth premium animation
+    interaction: {
+      mode: 'nearest',
+      axis: 'x',
+      intersect: false
+    },
     animations: {
       tension: {
-        duration: 1500,
+        duration: 1000,
         easing: 'easeOutQuart',
-        from: 0.2,
+        from: 0.3,
         to: 0.4,
         loop: false
       },
@@ -189,18 +192,17 @@ const cryptoChart = new Chart(ctx, {
         duration: 1200,
         easing: 'easeOutCubic',
         from: (ctx) => ctx.type === 'data' ? 0 : undefined,
-        delay: (ctx) => ctx.dataIndex * 80
+        delay: (ctx) => ctx.dataIndex * 50
       },
-      x: { duration: 800, easing: 'easeOutQuart' }
     },
-
     plugins: {
       legend: {
         display: false
       },
       tooltip: {
-        backgroundColor: 'rgba(17, 24, 39, 0.9)', /* slate glass tooltip */
-        borderColor: 'rgba(255,255,255,0.1)',
+        enabled: true,
+        backgroundColor: 'rgba(15, 23, 42, 0.9)',
+        borderColor: 'rgba(255, 255, 255, 0.1)',
         borderWidth: 1,
         titleColor: '#FFF',
         bodyColor: 'rgba(255,255,255,0.85)',
@@ -208,30 +210,39 @@ const cryptoChart = new Chart(ctx, {
         bodyFont: { size: 12, family: 'Inter, sans-serif' },
         padding: 10,
         displayColors: false,
-        usePointStyle: true,
-        cornerRadius: 8
+        cornerRadius: 8,
+        caretPadding: 6,
+        callbacks: {
+          label: function(context) {
+            return ` Price: $${context.parsed.y.toFixed(2)}`;
+          },
+          title: function(context) {
+            return `Date: ${context[0].label}`;
+          }
+        }
       }
     },
-
     scales: {
       x: {
-        grid: { color: 'rgba(255, 255, 255, 0.08)' },
+        grid: { color: 'rgba(255, 255, 255, 0.06)' },
         ticks: {
           color: 'rgba(235, 235, 245, 0.75)',
           font: { size: 12, weight: '500', family: 'Inter, sans-serif' }
         }
       },
       y: {
-        grid: { color: 'rgba(255, 255, 255, 0.08)' },
+        grid: { color: 'rgba(255, 255, 255, 0.06)' },
         ticks: {
           color: 'rgba(235, 235, 245, 0.75)',
-          font: { size: 12, weight: '500', family: 'Inter, sans-serif' }
+          font: { size: 12, weight: '500', family: 'Inter, sans-serif' },
+          callback: (value) => '$' + value
         }
       }
     }
   }
 });
 </script>
+
 
 
 
