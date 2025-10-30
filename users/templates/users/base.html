@@ -33,30 +33,39 @@
         <ul class="nav d-flex flex-column mt-3 w-100">
             <li class="nav-item w-100">
                 <a href="{% url 'userdashboard' %}" class="nav-link ps-4">
-                    <i class=" bi bi-house-door" style="font-size: 1.0em;"></i>
+                    <i class="bi bi-house-door"></i>
                     Dashboard
                 </a>
             </li>
 
-            <li class="nav-item w-100 disabled">
+            <!-- 🌟 New Predict Button -->
+            <li class="nav-item w-100">
+                <a href="" class="nav-link ps-4 nav-predict">
+                    <i class="bi bi-graph-up-arrow"></i>
+                    Predict
+                </a>
+            </li>
+
+            <li class="nav-item w-100">
                 <a href="{% url 'predictions' %}" class="nav-link ps-4">
-                    <i class=" bi bi-clipboard-data-fill" style="font-size: 1em;"></i>
+                    <i class="bi bi-clipboard-data-fill"></i>
                     Predictions
                 </a>
             </li>
 
             <li class="nav-item w-100">
                 <a href="{% url 'user_settings' %}" class="nav-link ps-4">
-                    <i class=" bi bi-graph-down-arrow" style="font-size: 1em;"></i>
+                    <i class="bi bi-gear"></i>
                     Account Settings
                 </a>
             </li>
 
             <a href="{% url 'account_logout' %}" class="nav-link ps-4">
-                <i class=" bi bi-door-closed" style="font-size: .7em;"></i>
+                <i class="bi bi-door-closed"></i>
                 <small class="text-muted">Logout</small>
             </a>
         </ul>
+
 
         <div class="pt-lg-5 text-center mt-auto px-3 mb-2" style="color: hsl(0, 0%, 47%);">
             <strong>UMP - Crypto Prediction Tool</strong><br />
